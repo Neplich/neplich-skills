@@ -48,7 +48,16 @@ for i in {1..30}; do
 done
 ```
 
-## Step 3 — Initialize Playwright
+## Step 3 — Install dependencies
+
+Install Playwright if not already installed:
+
+```bash
+npm install -D playwright
+npx playwright install chromium
+```
+
+## Step 4 — Initialize Playwright
 
 Create a minimal test script to initialize Playwright:
 
@@ -61,17 +70,29 @@ const { chromium } = require('playwright');
   const context = await browser.newContext();
   const page = await context.newPage();
 
-  // Continue to exploration logic
+  await page.goto('http://localhost:3000');
+  await explore(page);
+  await browser.close();
 })();
 ```
 
-## Step 4 — Random exploration
+## Step 5 — Random exploration
 
 Implement exploration logic (default 10 minutes):
 
 ```javascript
 const issues = [];
 const visited = new Set();
+
+function generateRandomInput() {
+  const types = [
+    () => Math.random().toString(36).substring(7),
+    () => Math.floor(Math.random() * 10000).toString(),
+    () => new Date().toISOString().split('T')[0],
+    () => 'test@example.com'
+  ];
+  return types[Math.floor(Math.random() * types.length)]();
+}
 
 async function explore(page, duration = 600000) {
   const startTime = Date.now();
@@ -115,7 +136,7 @@ async function explore(page, duration = 600000) {
 }
 ```
 
-## Step 5 — Record exceptions
+## Step 6 — Record exceptions
 
 Monitor for these issue types:
 
@@ -149,7 +170,7 @@ page.on('response', response => {
 });
 ```
 
-## Step 6 — Generate report
+## Step 7 — Generate report
 
 Create exploration report at `docs/qa-reports/YYYY-MM-DD-exploratory-report.md`:
 
@@ -178,7 +199,7 @@ Create exploration report at `docs/qa-reports/YYYY-MM-DD-exploratory-report.md`:
 - [改进建议]
 ```
 
-## Step 7 — Cleanup
+## Step 8 — Cleanup
 
 Close browser and stop application if it was started by this skill:
 
@@ -193,7 +214,7 @@ If application was started by this skill:
 kill $APP_PID
 ```
 
-## Step 8 — Commit results
+## Step 9 — Commit results
 
 Commit the exploration report:
 
