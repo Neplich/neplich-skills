@@ -1,0 +1,53 @@
+{
+  "name": "neplich-agent-skills",
+  "owner": {
+    "name": "neplich"
+  },
+  "metadata": {
+    "description": "Agent skills for Product Manager, Engineer, and QA workflows",
+    "version": "1.0.0"
+  },
+  "plugins": [
+    {
+      "name": "pm-agent",
+      "description": "Product Manager skills: idea-to-spec, competitive analysis, changelog generation, release notes, roadmap planning, and GitHub integration",
+      "source": "./",
+      "strict": false,
+      "skills": [
+        "./agents/product_manager/skills/idea-to-spec",
+        "./agents/product_manager/skills/competitive-brief",
+        "./agents/product_manager/skills/competitive-intelligence",
+        "./agents/product_manager/skills/changelog-generator",
+        "./agents/product_manager/skills/release-notes-generator",
+        "./agents/product_manager/skills/roadmap-generator",
+        "./agents/product_manager/skills/github-reader"
+      ]
+    },
+    {
+      "name": "engineer-agent",
+      "description": "Engineer skills: codebase analysis, project bootstrapping, feature implementation, test writing, debugging, and delivery",
+      "source": "./",
+      "strict": false,
+      "skills": [
+        "./agents/engineer/skills/codebase-analyzer",
+        "./agents/engineer/skills/project-bootstrap",
+        "./agents/engineer/skills/feature-implementor",
+        "./agents/engineer/skills/test-writer",
+        "./agents/engineer/skills/debugger",
+        "./agents/engineer/skills/delivery"
+      ]
+    },
+    {
+      "name": "qa-agent",
+      "description": "QA skills: exploratory testing, spec-based testing, bug analysis and reporting, and regression test management",
+      "source": "./",
+      "strict": false,
+      "skills": [
+        "./agents/qa/skills/exploratory-tester",
+        "./agents/qa/skills/spec-based-tester",
+        "./agents/qa/skills/bug-analyzer",
+        "./agents/qa/skills/regression-suite"
+      ]
+    }
+  ]
+}
