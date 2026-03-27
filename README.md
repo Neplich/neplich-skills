@@ -40,12 +40,9 @@
 
 ## 使用方式
 
-> [!IMPORTANT]
-> 先将仓库推送到 GitHub，并将下面命令中的 `your-username` 替换为你的 GitHub 用户名。
-
 ```bash
 # 1. 添加 marketplace
-/plugin marketplace add your-username/neplich-skills
+/plugin marketplace add neplich/neplich-skills
 
 # 2. 安装 QA Agent（一次性获得全部 4 个 skills）
 /plugin install qa-agent@neplich-agent-skills
