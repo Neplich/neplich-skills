@@ -1,6 +1,6 @@
 <div align="center">
 
-# Neplich Agent Skills
+# Dev Agent Skills
 
 面向软件交付全流程的 AI Agent 技能市场
 
@@ -96,15 +96,15 @@ graph LR
 
 ```bash
 # 1. 添加 marketplace
-/plugin marketplace add neplich/neplich-skills
+/plugin marketplace add Neplich/dev-agent-skills
 
 # 2. 安装所需的 Agent
-/plugin install pm-agent@neplich-agent-skills
-/plugin install engineer-agent@neplich-agent-skills
-/plugin install qa-agent@neplich-agent-skills
-/plugin install devops-agent@neplich-agent-skills
-/plugin install designer-agent@neplich-agent-skills
-/plugin install security-agent@neplich-agent-skills
+/plugin install pm-agent@dev-agent-skills
+/plugin install engineer-agent@dev-agent-skills
+/plugin install qa-agent@dev-agent-skills
+/plugin install devops-agent@dev-agent-skills
+/plugin install designer-agent@dev-agent-skills
+/plugin install security-agent@dev-agent-skills
 ```
 
 ### 更新
@@ -113,7 +113,7 @@ graph LR
 
 ```bash
 # 更新特定 Agent
-/plugin update pm-agent@neplich-agent-skills
+/plugin update pm-agent@dev-agent-skills
 
 # 或更新所有插件
 /plugin update

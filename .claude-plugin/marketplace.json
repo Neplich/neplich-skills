@@ -1,7 +1,7 @@
 {
-  "name": "neplich-agent-skills",
+  "name": "dev-agent-skills",
   "owner": {
-    "name": "neplich"
+    "name": "Neplich"
   },
   "metadata": {
     "description": "Agent skills for Product Manager, Engineer, QA, DevOps, Designer and Security workflows",
