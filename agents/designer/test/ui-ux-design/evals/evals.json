@@ -1,0 +1,25 @@
+{
+  "evals": [
+    {
+      "id": "eval-1-saas-dashboard",
+      "name": "SaaS Dashboard Design",
+      "description": "Design UI/UX for a project management SaaS dashboard",
+      "prompt": "Design the UI/UX for a project management dashboard. Users need to view projects, tasks, team members, and activity timeline. Target audience: small teams (5-20 people).",
+      "workspace": "workspace/eval-1-saas-dashboard"
+    },
+    {
+      "id": "eval-2-ecommerce",
+      "name": "E-commerce Product Page",
+      "description": "Design UI/UX for an e-commerce product listing and detail pages",
+      "prompt": "Design the UI/UX for an e-commerce site selling handmade crafts. Need product listing, filters, product detail page, and shopping cart. Target: mobile-first design.",
+      "workspace": "workspace/eval-2-ecommerce"
+    },
+    {
+      "id": "eval-3-with-reference",
+      "name": "Design with Reference Website",
+      "description": "Design UI/UX using a reference website for style inspiration",
+      "prompt": "Design a landing page for a productivity app. Reference website: https://linear.app for clean, modern aesthetic.",
+      "workspace": "workspace/eval-3-with-reference"
+    }
+  ]
+}

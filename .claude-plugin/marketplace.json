@@ -4,7 +4,7 @@
     "name": "neplich"
   },
   "metadata": {
-    "description": "Agent skills for Product Manager, Engineer, QA and DevOps workflows",
+    "description": "Agent skills for Product Manager, Engineer, QA, DevOps and Designer workflows",
     "version": "1.0.0"
   },
   "plugins": [
@@ -59,6 +59,16 @@
         "./agents/devops/skills/cicd-bootstrap",
         "./agents/devops/skills/env-config-auditor",
         "./agents/devops/skills/incident-playbook-writer"
+      ]
+    },
+    {
+      "name": "designer-agent",
+      "description": "Designer skills: UI/UX design with reference analysis and visual design system creation",
+      "source": "./",
+      "strict": false,
+      "skills": [
+        "./agents/designer/skills/ui-ux-design",
+        "./agents/designer/skills/visual-design"
       ]
     }
   ]

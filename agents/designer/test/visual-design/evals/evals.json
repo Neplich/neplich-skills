@@ -1,0 +1,25 @@
+{
+  "evals": [
+    {
+      "id": "eval-1-minimalist",
+      "name": "Minimalist Design System",
+      "description": "Create a minimalist design system for a productivity app",
+      "prompt": "Create a visual design system for a minimalist productivity app. Target: professionals who value simplicity and focus.",
+      "workspace": "workspace/eval-1-minimalist"
+    },
+    {
+      "id": "eval-2-playful",
+      "name": "Playful Design System",
+      "description": "Create a playful design system for a consumer app",
+      "prompt": "Create a visual design system for a social recipe sharing app. Target: home cooks, casual and fun tone.",
+      "workspace": "workspace/eval-2-playful"
+    },
+    {
+      "id": "eval-3-professional",
+      "name": "Professional Design System",
+      "description": "Create a professional design system for enterprise software",
+      "prompt": "Create a visual design system for an enterprise analytics platform. Target: corporate users, trustworthy and authoritative.",
+      "workspace": "workspace/eval-3-professional"
+    }
+  ]
+}

@@ -105,6 +105,16 @@
       "source": "/Users/neplich/dev/neplich-skills/agents/devops/skills/incident-playbook-writer",
       "sourceType": "local",
       "computedHash": "25c143c446ec4cb28a12eab2c553b85dc154b4b2d20e8236a85b0e66834531fe"
+    },
+    "ui-ux-design": {
+      "source": "/Users/neplich/dev/neplich-skills/agents/designer/skills/ui-ux-design",
+      "sourceType": "local",
+      "computedHash": "placeholder1"
+    },
+    "visual-design": {
+      "source": "/Users/neplich/dev/neplich-skills/agents/designer/skills/visual-design",
+      "sourceType": "local",
+      "computedHash": "placeholder2"
     }
   }
 }
