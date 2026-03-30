@@ -1,0 +1,9 @@
+{
+  "evals": [
+    {
+      "name": "vercel-style-web-app",
+      "description": "Generate deployment configs for a simple Next.js web app",
+      "prompt": "Create deployment configurations for a Next.js web application with PostgreSQL database"
+    }
+  ]
+}

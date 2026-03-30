@@ -1,0 +1,9 @@
+{
+  "evals": [
+    {
+      "name": "rollback-playbook",
+      "description": "Generate incident response and rollback procedures",
+      "prompt": "Create operational runbooks for incident response and rollback procedures"
+    }
+  ]
+}

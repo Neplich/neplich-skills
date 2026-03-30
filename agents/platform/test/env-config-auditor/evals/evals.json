@@ -1,0 +1,9 @@
+{
+  "evals": [
+    {
+      "name": "config-audit",
+      "description": "Audit environment variables across all deployment configs",
+      "prompt": "Check if all environment variables are properly configured across local, docker, and helm deployments"
+    }
+  ]
+}

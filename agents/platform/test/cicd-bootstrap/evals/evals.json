@@ -1,0 +1,9 @@
+{
+  "evals": [
+    {
+      "name": "github-actions-setup",
+      "description": "Set up GitHub Actions CI/CD for Docker deployment",
+      "prompt": "Create GitHub Actions workflows for automated testing and Docker deployment"
+    }
+  ]
+}
