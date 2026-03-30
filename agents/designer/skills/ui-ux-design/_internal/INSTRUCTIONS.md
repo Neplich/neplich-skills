@@ -168,7 +168,7 @@ Document responsive breakpoints:
 
 ### Step 9: Generate Output Document
 
-Create `docs/design/ui-ux-spec.md` with the following structure:
+Create `docs/design/{feature-name}/ui-ux-spec.md` with the following structure:
 
 ```markdown
 # UI/UX Design Specification
@@ -208,4 +208,4 @@ Before finalizing, ensure:
 
 ## Output Location
 
-Write the final document to: `docs/design/ui-ux-spec.md`
+Write the final document to: `docs/design/{feature-name}/ui-ux-spec.md`

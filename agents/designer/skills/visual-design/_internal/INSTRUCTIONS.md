@@ -171,7 +171,7 @@ Based on product type:
 
 ### Step 8: Generate Output Document
 
-Create `docs/design/visual-system.md` with this structure:
+Create `docs/design/{feature-name}/visual-system.md` with this structure:
 
 ```markdown
 # Visual Design System
@@ -205,4 +205,4 @@ Create `docs/design/visual-system.md` with this structure:
 
 ## Output Location
 
-Write to: `docs/design/visual-system.md`
+Write to: `docs/design/{feature-name}/visual-system.md`
