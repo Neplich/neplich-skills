@@ -115,6 +115,26 @@
       "source": "/Users/neplich/dev/neplich-skills/agents/designer/skills/visual-design",
       "sourceType": "local",
       "computedHash": "placeholder2"
+    },
+    "appsec-checklist": {
+      "source": "/Users/neplich/dev/neplich-skills/agents/security/skills/appsec-checklist",
+      "sourceType": "local",
+      "computedHash": "placeholder3"
+    },
+    "authz-reviewer": {
+      "source": "/Users/neplich/dev/neplich-skills/agents/security/skills/authz-reviewer",
+      "sourceType": "local",
+      "computedHash": "placeholder4"
+    },
+    "dependency-risk-auditor": {
+      "source": "/Users/neplich/dev/neplich-skills/agents/security/skills/dependency-risk-auditor",
+      "sourceType": "local",
+      "computedHash": "placeholder5"
+    },
+    "privacy-surface-mapper": {
+      "source": "/Users/neplich/dev/neplich-skills/agents/security/skills/privacy-surface-mapper",
+      "sourceType": "local",
+      "computedHash": "placeholder6"
     }
   }
 }

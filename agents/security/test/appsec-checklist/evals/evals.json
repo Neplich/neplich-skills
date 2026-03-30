@@ -1,0 +1,25 @@
+{
+  "evals": [
+    {
+      "id": "eval-1-sql-injection",
+      "name": "SQL Injection Vulnerability",
+      "description": "Test detection of SQL injection vulnerability in user search",
+      "prompt": "Review the security of this user search API endpoint.",
+      "workspace": "workspace/eval-1-sql-injection"
+    },
+    {
+      "id": "eval-2-auth-bypass",
+      "name": "Authentication Bypass",
+      "description": "Test detection of missing authentication on admin endpoint",
+      "prompt": "Check the security of the admin panel endpoints.",
+      "workspace": "workspace/eval-2-auth-bypass"
+    },
+    {
+      "id": "eval-3-xss",
+      "name": "XSS Vulnerability",
+      "description": "Test detection of XSS in comment rendering",
+      "prompt": "Review the security of the comment display feature.",
+      "workspace": "workspace/eval-3-xss"
+    }
+  ]
+}

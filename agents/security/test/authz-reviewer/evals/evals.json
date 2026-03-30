@@ -1,0 +1,25 @@
+{
+  "evals": [
+    {
+      "id": "eval-1-rbac",
+      "name": "Role-Based Access Control",
+      "description": "Test review of RBAC implementation in multi-role app",
+      "prompt": "Review the authorization logic for this admin/user/guest system.",
+      "workspace": "workspace/eval-1-rbac"
+    },
+    {
+      "id": "eval-2-session",
+      "name": "Session Management",
+      "description": "Test review of session security configuration",
+      "prompt": "Check the session management security.",
+      "workspace": "workspace/eval-2-session"
+    },
+    {
+      "id": "eval-3-jwt",
+      "name": "JWT Implementation",
+      "description": "Test review of JWT token security",
+      "prompt": "Review the JWT authentication implementation.",
+      "workspace": "workspace/eval-3-jwt"
+    }
+  ]
+}

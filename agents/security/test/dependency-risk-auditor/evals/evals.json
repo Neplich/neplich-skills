@@ -1,0 +1,25 @@
+{
+  "evals": [
+    {
+      "id": "eval-1-npm-audit",
+      "name": "NPM Dependency Audit",
+      "description": "Test audit of Node.js project with vulnerable dependencies",
+      "prompt": "Audit the dependencies for security vulnerabilities.",
+      "workspace": "workspace/eval-1-npm-audit"
+    },
+    {
+      "id": "eval-2-abandoned",
+      "name": "Abandoned Packages",
+      "description": "Test detection of abandoned/outdated packages",
+      "prompt": "Check for abandoned or outdated dependencies.",
+      "workspace": "workspace/eval-2-abandoned"
+    },
+    {
+      "id": "eval-3-python",
+      "name": "Python Dependency Audit",
+      "description": "Test audit of Python project dependencies",
+      "prompt": "Review Python dependencies for security issues.",
+      "workspace": "workspace/eval-3-python"
+    }
+  ]
+}

@@ -4,7 +4,7 @@
     "name": "neplich"
   },
   "metadata": {
-    "description": "Agent skills for Product Manager, Engineer, QA, DevOps and Designer workflows",
+    "description": "Agent skills for Product Manager, Engineer, QA, DevOps, Designer and Security workflows",
     "version": "1.0.0"
   },
   "plugins": [
@@ -69,6 +69,18 @@
       "skills": [
         "./agents/designer/skills/ui-ux-design",
         "./agents/designer/skills/visual-design"
+      ]
+    },
+    {
+      "name": "security-agent",
+      "description": "Security skills: application security checklist, authorization review, dependency audit, and privacy mapping",
+      "source": "./",
+      "strict": false,
+      "skills": [
+        "./agents/security/skills/appsec-checklist",
+        "./agents/security/skills/authz-reviewer",
+        "./agents/security/skills/dependency-risk-auditor",
+        "./agents/security/skills/privacy-surface-mapper"
       ]
     }
   ]

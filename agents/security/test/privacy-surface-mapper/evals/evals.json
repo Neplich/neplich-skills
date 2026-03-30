@@ -1,0 +1,25 @@
+{
+  "evals": [
+    {
+      "id": "eval-1-gdpr",
+      "name": "GDPR Compliance Check",
+      "description": "Test privacy mapping for user data collection",
+      "prompt": "Map the personal data collection and check GDPR compliance.",
+      "workspace": "workspace/eval-1-gdpr"
+    },
+    {
+      "id": "eval-2-user-rights",
+      "name": "User Rights Implementation",
+      "description": "Test checking of user data rights implementation",
+      "prompt": "Check if user rights (access, deletion, export) are implemented.",
+      "workspace": "workspace/eval-2-user-rights"
+    },
+    {
+      "id": "eval-3-third-party",
+      "name": "Third-Party Data Sharing",
+      "description": "Test mapping of third-party data sharing",
+      "prompt": "Identify all third-party services receiving user data.",
+      "workspace": "workspace/eval-3-third-party"
+    }
+  ]
+}
