@@ -193,7 +193,8 @@ neplich-skills/
 ├── docs/
 │   └── README.codex.md       # Codex 使用与安装说明
 ├── skills-lock.json          # Skills 锁定信息
-└── CLAUDE.md                 # 仓库开发指南
+├── CLAUDE.md                 # Claude Code 仓库开发指南
+└── AGENTS.md                 # AGENTS 通用仓库开发指南（需与 CLAUDE.md 保持一致）
 ```
 
 每个 Agent 的目录结构：
@@ -224,7 +225,10 @@ agents/{agent-name}/
 
 ### 添加新 Agent
 
-参考 `CLAUDE.md` 中的详细指南，包含完整的 Agent 创建流程。
+参考 `CLAUDE.md` 和 `AGENTS.md` 中的详细指南，包含完整的 Agent 创建流程。
+
+> [!IMPORTANT]
+> `CLAUDE.md` 和 `AGENTS.md` 需要保持内容一致。修改其中任一文件时，必须同步更新另一份。
 
 ### 设计原则
 
@@ -237,6 +241,6 @@ agents/{agent-name}/
 
 <div align="center">
 
-**[查看完整文档](./CLAUDE.md)** • **[贡献指南](./CONTRIBUTING.md)** • **[问题反馈](../../issues)**
+**[查看 CLAUDE.md](./CLAUDE.md)** • **[查看 AGENTS.md](./AGENTS.md)** • **[贡献指南](./CONTRIBUTING.md)** • **[问题反馈](../../issues)**
 
 </div>
