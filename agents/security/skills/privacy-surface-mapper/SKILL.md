@@ -3,35 +3,115 @@ name: privacy-surface-mapper
 description: Map personal data collection points and privacy compliance requirements for GDPR/CCPA.
 ---
 
-# Privacy Surface Mapper
+## Execution Steps
 
-映射个人数据收集点，识别隐私合规要求。
+### Step 1: Understand Data Requirements
 
-## 使用场景
+1. **Read PM documents** from `docs/pm/{feature-name}/`:
+   - PRD: identify what user data is collected and why
+   - Extract data fields (name, email, phone, address, etc.)
 
-- 应用收集用户个人信息
-- 需要进行 GDPR/CCPA 合规检查
-- 需要生成隐私影响评估
+### Step 2: Map Data Collection Points
 
-## 输入
+**A. Find data collection code:**
+- Search for form inputs, API endpoints collecting user data
+- Search for user registration/profile endpoints
+- Search for analytics/tracking code
 
-- 代码库（数据收集和存储代码）
-- PM 文档：PRD（功能和数据需求）
+**B. Classify data types:**
+- **Personal Identifiable Information (PII):** name, email, phone, address
+- **Sensitive data:** health info, financial data, biometric data
+- **Behavioral data:** browsing history, preferences, usage patterns
 
-## 输出
+### Step 3: Analyze Data Storage and Transmission
 
-生成 `docs/security/{feature-name}/privacy-map.md`，包含：
-- 个人数据收集清单
-- 数据存储和传输分析
-- 用户权利实现状态（访问、删除、导出）
-- 合规风险和建议
+**A. Storage:**
+- Where is data stored (database, files, cache)
+- Is data encrypted at rest
+- Data retention period
 
-## 使用方式
+**B. Transmission:**
+- Is data encrypted in transit (HTTPS)
+- Third-party data sharing
+- Cross-border data transfers
 
-```bash
-/privacy-surface-mapper
+### Step 4: Check User Rights Implementation
+
+**GDPR/CCPA requires:**
+- Right to access (data export)
+- Right to deletion (data erasure)
+- Right to rectification (data correction)
+- Right to portability (data download)
+
+Search for implementation of these features.
+
+### Step 5: Generate Privacy Map Report
+
+Create `docs/security/{feature-name}/privacy-map.md`:
+
+**Frontmatter:**
+```yaml
+---
+feature: {feature-name}
+version: v1
+date: YYYY-MM-DD
+last_updated: YYYY-MM-DD
+---
 ```
 
----
+**Report Structure:**
 
-详细实现指南请查看 `_internal/INSTRUCTIONS.md`
+1. **Personal Data Inventory**
+   - Table of all personal data collected
+   - Data type, purpose, legal basis
+
+2. **Data Flow Diagram**
+   - Collection → Storage → Processing → Deletion
+
+3. **Third-Party Data Sharing**
+   - List of third parties receiving data
+   - Purpose and legal basis
+
+4. **User Rights Implementation Status**
+   - Access: ✅/❌
+   - Deletion: ✅/❌
+   - Export: ✅/❌
+   - Correction: ✅/❌
+
+5. **Privacy Risks**
+   - Compliance gaps
+   - Missing consent mechanisms
+   - Inadequate data protection
+
+6. **Recommendations**
+   - Priority fixes for compliance
+   - Privacy policy updates needed
+
+## Output Format
+
+```markdown
+## Personal Data Inventory
+
+| Data Field | Type | Purpose | Legal Basis | Retention |
+|-----------|------|---------|-------------|-----------|
+| Email | PII | Account login | Contract | Account lifetime |
+| Name | PII | Personalization | Consent | Account lifetime |
+| IP Address | PII | Security | Legitimate interest | 90 days |
+
+## User Rights Status
+
+- ✅ Right to Access: Implemented via /api/user/export
+- ❌ Right to Deletion: Not implemented
+- ❌ Right to Export: Partial (missing transaction history)
+- ✅ Right to Correction: Implemented via profile edit
+
+## Privacy Risks
+
+### [HIGH] Missing Data Deletion Endpoint
+
+**Issue:** No way for users to delete their account and data
+
+**Compliance Impact:** GDPR Article 17 violation
+
+**Fix:** Implement account deletion endpoint with cascading data removal
+```

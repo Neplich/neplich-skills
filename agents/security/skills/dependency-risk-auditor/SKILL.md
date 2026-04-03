@@ -3,35 +3,121 @@ name: dependency-risk-auditor
 description: Audit project dependencies for known vulnerabilities, abandoned packages, and supply chain risks.
 ---
 
-# Dependency Risk Auditor
+## Execution Steps
 
-审计项目依赖的安全风险，识别漏洞和废弃包。
+### Step 1: Identify Dependency Files
 
-## 使用场景
+Search for dependency manifest files:
+- `package.json` / `package-lock.json` (Node.js)
+- `requirements.txt` / `Pipfile` (Python)
+- `go.mod` / `go.sum` (Go)
+- `Gemfile` / `Gemfile.lock` (Ruby)
+- `pom.xml` / `build.gradle` (Java)
+- `Cargo.toml` (Rust)
 
-- 项目使用了第三方依赖
-- 需要进行供应链安全审查
-- 准备发布前的依赖检查
+### Step 2: Run Security Audit Commands
 
-## 输入
+Execute appropriate audit commands based on the ecosystem:
 
-- 依赖清单文件（package.json, requirements.txt, go.mod 等）
-- 代码库
-
-## 输出
-
-生成 `docs/security/{feature-name}/dependency-audit.md`，包含：
-- 已知漏洞清单
-- 废弃包识别
-- 高风险依赖分析
-- 升级建议和缓解措施
-
-## 使用方式
-
+**Node.js:**
 ```bash
-/dependency-risk-auditor
+npm audit --json
 ```
 
----
+**Python:**
+```bash
+pip-audit --format json
+```
 
-详细实现指南请查看 `_internal/INSTRUCTIONS.md`
+**Go:**
+```bash
+go list -json -m all | nancy sleuth
+```
+
+If audit tools are not available, proceed with manual analysis.
+
+### Step 3: Analyze Dependencies
+
+**A. Known Vulnerabilities:**
+- Parse audit output for CVEs
+- Classify by severity (Critical/High/Medium/Low)
+- Check if vulnerability is exploitable in current usage
+
+**B. Abandoned Packages:**
+- Check last update date (>2 years = potential abandonment)
+- Check GitHub repo status (archived, no recent commits)
+- Check npm/PyPI deprecation notices
+
+**C. Supply Chain Risks:**
+- Check for packages with few maintainers
+- Check for suspicious recent ownership changes
+- Check for typosquatting risks
+
+**D. Transitive Dependencies:**
+- Identify high-risk transitive dependencies
+- Check dependency tree depth
+
+### Step 4: Generate Dependency Audit Report
+
+Create `docs/security/{feature-name}/dependency-audit.md`:
+
+**Frontmatter:**
+```yaml
+---
+feature: {feature-name}
+version: v1
+date: YYYY-MM-DD
+last_updated: YYYY-MM-DD
+---
+```
+
+**Report Structure:**
+
+1. **Executive Summary**
+   - Total dependencies count
+   - Vulnerabilities found (by severity)
+   - Abandoned packages count
+   - Overall risk level
+
+2. **Critical Vulnerabilities**
+   - Package name and version
+   - CVE ID
+   - Vulnerability description
+   - Exploitability assessment
+   - Fix version / mitigation
+
+3. **High/Medium/Low Vulnerabilities**
+   - Same format as Critical
+
+4. **Abandoned Packages**
+   - Package name
+   - Last update date
+   - Replacement suggestions
+
+5. **Upgrade Recommendations**
+   - Priority order
+   - Breaking change warnings
+   - Testing requirements
+
+## Output Format
+
+```markdown
+### [CRITICAL] Prototype Pollution in lodash
+
+**Package:** lodash@4.17.15
+**CVE:** CVE-2020-8203
+**Severity:** Critical
+
+**Description:**
+Prototype pollution vulnerability allows attackers to modify object prototypes.
+
+**Exploitability:** High - package is used in user input processing
+
+**Fix:**
+Upgrade to lodash@4.17.21 or higher
+\`\`\`bash
+npm install lodash@latest
+\`\`\`
+
+**Breaking Changes:** None
+```

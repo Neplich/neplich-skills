@@ -3,39 +3,208 @@ name: ui-ux-design
 description: Design UI/UX flows and specifications with optional reference website analysis. Outputs user journeys, page layouts, and ASCII prototypes.
 ---
 
-# UI/UX Design
+## Execution Steps
 
-设计用户体验流程和界面规范，支持参考网站风格分析。
+### Step 1: Gather Requirements
 
-## 使用场景
+1. **Read PM documents** from `docs/` directory:
+   - PRD: feature requirements, user stories, use cases
+   - BRD: target users, business goals, brand tone
+   - TRD: technical constraints, performance requirements
 
-- 需要设计新产品的用户界面
-- 需要重新设计现有产品的交互流程
-- 需要参考优秀网站的设计模式
+2. **Ask for reference websites** using AskUserQuestion:
+   ```
+   Question: "Do you have any favorite websites or design references we should follow?"
+   Options:
+   - "Yes, I have reference websites" (provide URL input)
+   - "No, create an original design"
+   ```
 
-## 输入
+### Step 2: Analyze Reference (if provided)
 
-- PM 文档：PRD、BRD、TRD
-- 可选：参考网站 URL
+If user provides reference website URL:
 
-## 输出
+1. **Fetch reference website** using WebFetch
+2. **Extract design patterns**:
+   - Layout structure (header/nav/content/footer)
+   - Navigation patterns (top nav, sidebar, hamburger)
+   - Information architecture
+   - Interaction patterns (cards, lists, modals)
+   - Visual hierarchy
 
-生成 `docs/design/ui-ux-spec.md`，包含：
-- 用户旅程图（Mermaid）
-- 页面清单和布局
-- ASCII 界面原型
-- 交互行为说明
+3. **Document findings** in a temporary analysis note
 
-## 使用方式
+### Step 3: Design User Journey
 
-```bash
-# 基础使用
-/ui-ux-design
+Create user journey map using Mermaid flowchart:
 
-# 指定参考网站
-/ui-ux-design --reference https://example.com
+```mermaid
+graph TD
+    A[Landing] --> B{User Type}
+    B -->|New User| C[Signup]
+    B -->|Existing| D[Login]
+    C --> E[Onboarding]
+    D --> F[Dashboard]
+    E --> F
 ```
 
----
+Include:
+- Main task flows
+- Decision points
+- Edge cases (empty states, errors, loading)
 
-详细实现指南请查看 `_internal/INSTRUCTIONS.md`
+
+### Step 4: Create Page Inventory
+
+List all required pages/screens:
+
+```markdown
+## Page Inventory
+
+1. **Landing Page** - Marketing homepage
+2. **Login/Signup** - Authentication
+3. **Dashboard** - Main user interface
+4. **Settings** - User preferences
+5. **[Feature Page]** - Specific feature screens
+```
+
+### Step 5: Design ASCII Prototypes
+
+For each major page, create ASCII layout prototype:
+
+```
+┌─────────────────────────────────────────────────┐
+│  [Logo]              [Nav Links]      [Profile] │
+├─────────────────────────────────────────────────┤
+│                                                  │
+│  ┌────────────────┐  ┌────────────────┐        │
+│  │                │  │                │        │
+│  │   Card Title   │  │   Card Title   │        │
+│  │   [Image]      │  │   [Image]      │        │
+│  │   Description  │  │   Description  │        │
+│  │   [Button]     │  │   [Button]     │        │
+│  │                │  │                │        │
+│  └────────────────┘  └────────────────┘        │
+│                                                  │
+├─────────────────────────────────────────────────┤
+│  Footer: Links | Contact | © 2026              │
+└─────────────────────────────────────────────────┘
+```
+
+Use box-drawing characters: ┌ ┐ └ ┘ ├ ┤ ─ │
+
+
+### Step 6: Define Component List
+
+List all UI components needed:
+
+```markdown
+## Component List
+
+### Navigation
+- Header with logo and nav links
+- Mobile hamburger menu
+- Breadcrumbs
+
+### Content
+- Card component (image, title, description, action)
+- List items
+- Data tables
+- Forms (input, select, checkbox, radio)
+
+### Feedback
+- Modals/dialogs
+- Toast notifications
+- Loading spinners
+- Empty states
+- Error messages
+```
+
+
+### Step 7: Document Interactions
+
+Describe key interactions and behaviors:
+
+```markdown
+## Interaction Behaviors
+
+### Navigation
+- Click logo → return to homepage
+- Hover nav links → show underline
+- Mobile: hamburger menu slides from left
+
+### Forms
+- Input focus → show blue border
+- Validation → inline error messages
+- Submit → loading state → success/error feedback
+
+### Cards
+- Hover → slight elevation shadow
+- Click → navigate to detail page
+```
+
+### Step 8: Handle Responsive Design
+
+Document responsive breakpoints:
+
+```markdown
+## Responsive Design
+
+### Desktop (>1024px)
+- 3-column card grid
+- Full navigation visible
+
+### Tablet (768px-1024px)
+- 2-column card grid
+- Condensed navigation
+
+### Mobile (<768px)
+- 1-column stack
+- Hamburger menu
+- Touch-friendly buttons (min 44px)
+```
+
+
+### Step 9: Generate Output Document
+
+Create `docs/design/{feature-name}/ui-ux-spec.md` with the following structure:
+
+```markdown
+# UI/UX Design Specification
+
+## 1. Reference Analysis (if applicable)
+- Reference URL: [url]
+- Key patterns extracted: [list]
+
+## 2. User Journey
+[Mermaid flowchart]
+
+## 3. Page Inventory
+[List of all pages]
+
+## 4. Page Layouts
+[ASCII prototypes for each page]
+
+## 5. Component List
+[All UI components needed]
+
+## 6. Interaction Behaviors
+[Key interactions and states]
+
+## 7. Responsive Design
+[Breakpoints and adaptations]
+```
+
+## Quality Checklist
+
+Before finalizing, ensure:
+- [ ] All user flows are covered (happy path + edge cases)
+- [ ] ASCII prototypes are clear and readable
+- [ ] Component list is complete
+- [ ] Interactions are well-defined
+- [ ] Responsive design is addressed
+- [ ] Reference patterns (if any) are properly adapted
+
+## Output Location
+
+Write the final document to: `docs/design/{feature-name}/ui-ux-spec.md`

@@ -3,36 +3,127 @@ name: authz-reviewer
 description: Review authentication and authorization logic, check permission models and access control implementation.
 ---
 
-# Authorization Reviewer
+## Execution Steps
 
-审查认证授权逻辑，检查权限模型和访问控制实现。
+### Step 1: Understand User Roles and Permissions
 
-## 使用场景
+1. **Read PM documents** from `docs/pm/{feature-name}/`:
+   - PRD: identify user roles, permissions, access levels
+   - Extract role definitions (e.g., admin, user, guest)
 
-- 实现了用户认证/授权功能
-- 需要审查权限模型是否正确
-- 多角色/多租户系统的权限检查
+2. **Create role matrix** - document expected permissions for each role
 
-## 输入
+### Step 2: Analyze Authentication Flow
 
-- 代码库（认证/授权相关代码）
-- PM 文档：PRD（用户角色定义）
+**A. Find authentication code:**
+- Search for login/signup endpoints
+- Search for password handling
+- Search for token generation (JWT, session)
 
-## 输出
+**B. Check authentication security:**
+- Password hashing algorithm (bcrypt, argon2)
+- Password strength requirements
+- Rate limiting on login attempts
+- Account lockout mechanism
+- Multi-factor authentication (if applicable)
 
-生成 `docs/security/{feature-name}/authz-review.md`，包含：
-- 角色权限矩阵
-- 认证流程分析
-- 授权检查覆盖情况
-- 会话管理审查
-- 安全问题和修复建议
+### Step 3: Analyze Authorization Logic
 
-## 使用方式
+**A. Find authorization checks:**
+- Search for permission checks in routes/controllers
+- Search for role-based access control (RBAC)
+- Search for middleware/decorators handling authorization
 
-```bash
-/authz-reviewer
+**B. Check authorization coverage:**
+- All protected endpoints have authorization checks
+- Authorization happens server-side (not just client-side)
+- Proper role hierarchy enforcement
+- Tenant isolation (for multi-tenant apps)
+
+### Step 4: Review Session Management
+
+**A. Session configuration:**
+- Session timeout settings
+- Secure cookie flags (httpOnly, secure, sameSite)
+- Session regeneration after login
+- Proper logout implementation
+
+**B. Token security (if using JWT/tokens):**
+- Token expiration
+- Token refresh mechanism
+- Token storage (not in localStorage for sensitive apps)
+- Token revocation capability
+
+### Step 5: Generate Authorization Review Report
+
+Create `docs/security/{feature-name}/authz-review.md`:
+
+**Frontmatter:**
+```yaml
+---
+feature: {feature-name}
+version: v1
+date: YYYY-MM-DD
+last_updated: YYYY-MM-DD
+---
 ```
 
----
+**Report Structure:**
 
-详细实现指南请查看 `_internal/INSTRUCTIONS.md`
+1. **Role Permission Matrix**
+   - Table showing roles and their permissions
+   - Expected vs actual implementation
+
+2. **Authentication Flow Analysis**
+   - Login flow diagram
+   - Password security assessment
+   - Session/token generation review
+
+3. **Authorization Coverage**
+   - Protected endpoints list
+   - Authorization check status for each
+   - Missing authorization checks (if any)
+
+4. **Session Management Review**
+   - Session configuration assessment
+   - Security flags status
+   - Session lifecycle handling
+
+5. **Security Issues Found**
+   - Critical/High/Medium/Low issues
+   - Specific locations and fix recommendations
+
+6. **Recommendations**
+   - Priority fixes
+   - Best practices to implement
+
+## Output Format
+
+Use tables and diagrams for clarity:
+
+```markdown
+## Role Permission Matrix
+
+| Role | View Users | Edit Users | Delete Users | Admin Panel |
+|------|-----------|-----------|--------------|-------------|
+| Admin | ✅ | ✅ | ✅ | ✅ |
+| User | ✅ | ❌ | ❌ | ❌ |
+| Guest | ❌ | ❌ | ❌ | ❌ |
+
+## Authorization Issues
+
+### [HIGH] Missing Authorization Check on Delete Endpoint
+
+**Location:** `src/api/users.js:78`
+
+**Issue:** DELETE /api/users/:id has no authorization check
+
+**Risk:** Any authenticated user can delete other users
+
+**Fix:**
+\`\`\`javascript
+app.delete('/api/users/:id', requireRole('admin'), async (req, res) => {
+  // delete logic
+});
+\`\`\`
+```
