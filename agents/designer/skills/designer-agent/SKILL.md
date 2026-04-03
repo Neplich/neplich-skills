@@ -3,34 +3,36 @@ name: designer-agent
 description: Designer Agent intelligent dispatcher - analyzes design needs and executes appropriate design skills.
 ---
 
-# Designer Agent
+# Designer Agent Dispatcher
 
 Designer Agent 智能入口，根据设计需求自动选择执行合适的设计 skills。
 
-## 使用场景
+## Available Skills
 
-- 需要设计 UI/UX 但不确定从哪开始
-- 需要完整的设计系统
-- 需要视觉风格定义
+- `designer-agent:ui-ux-design` - Design UX flows and UI specifications
+- `designer-agent:visual-design` - Define visual design system
 
-## 输入
+## Step 1: Analyze Context
 
-用户的自然语言描述，例如：
-- "设计用户登录界面"
-- "创建设计系统"
-- "定义视觉风格"
+Identify:
+- Are there PM documents (PRD, BRD) to read?
+- Is this a UX flow request or a visual system request?
+- Is there an existing design to extend?
 
-## 输出
+## Step 2: Select Skill
 
-根据设计需求自动调用相应的 skills 并输出设计文档。
+| User Intent | Skill to Execute |
+|-------------|-----------------|
+| 设计界面/流程 | ui-ux-design |
+| 视觉系统/风格 | visual-design |
+| 完整设计 | ui-ux-design → visual-design |
 
-## 使用方式
+If intent is ambiguous, ask the user to clarify before proceeding.
 
-```bash
-/designer-agent "设计用户登录流程"
-/designer-agent "创建完整的设计系统"
-```
+## Step 3: Execute
 
----
+Invoke the selected skill(s) using the Skill tool.
 
-详细实现指南请查看 `_internal/INSTRUCTIONS.md`
+## Step 4: Present Results
+
+Summarize design outputs and file locations.

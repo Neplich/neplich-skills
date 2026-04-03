@@ -3,36 +3,46 @@ name: pm-agent
 description: PM Agent intelligent dispatcher - analyzes user intent and automatically selects and executes appropriate PM skills.
 ---
 
-# PM Agent
+# PM Agent Dispatcher
 
 PM Agent 智能入口，自动分析用户意图并选择执行合适的 PM skills。
 
-## 使用场景
+## Available Skills
 
-- 不确定该用哪个具体的 PM skill
-- 需要执行多个 PM 任务的组合
-- 希望 Agent 自动判断并执行完整的 PM 工作流
+- `pm-agent:idea-to-spec` - Generate PRD, BRD, TRD, ADR from ideas
+- `pm-agent:competitive-brief` - Competitive analysis and positioning
+- `pm-agent:competitive-intelligence` - Sales-focused battlecard
+- `pm-agent:changelog-generator` - Generate changelog from GitHub
+- `pm-agent:release-notes-generator` - Generate user-facing release notes
+- `pm-agent:roadmap-generator` - Generate roadmap from GitHub milestones
+- `pm-agent:github-reader` - Read GitHub project status
 
-## 输入
+## Step 1: Analyze User Intent
 
-用户的自然语言描述，例如：
-- "我想做一个任务管理应用"
-- "帮我分析竞品"
-- "生成这个版本的 changelog"
-- "查看 GitHub 项目状态"
+Parse the user's request to identify:
+- Primary goal (new product, analysis, documentation, status check)
+- Specific artifacts needed (PRD, roadmap, changelog, etc.)
+- Context (existing project vs new idea)
 
-## 输出
+## Step 2: Select Skill
 
-根据用户意图自动调用相应的 skills 并输出结果。
+| User Intent | Skill to Execute |
+|-------------|-----------------|
+| 新产品/新功能想法 | idea-to-spec |
+| 竞品分析 | competitive-brief |
+| 销售 battlecard | competitive-intelligence |
+| 生成 changelog | changelog-generator |
+| 发版说明 | release-notes-generator |
+| 路线图规划 | roadmap-generator |
+| 项目状态 | github-reader |
+| 完整产品规划 | idea-to-spec → competitive-brief → roadmap-generator |
 
-## 使用方式
+If intent is ambiguous, ask the user to clarify before proceeding.
 
-```bash
-/pm-agent "我想做一个任务管理应用"
-/pm-agent "分析竞品并生成路线图"
-/pm-agent "生成 v2.0 的发版说明"
-```
+## Step 3: Execute
 
----
+Invoke the selected skill(s) using the Skill tool. For multiple skills, execute in sequence and pass context between them.
 
-详细实现指南请查看 `_internal/INSTRUCTIONS.md`
+## Step 4: Present Results
+
+Summarize what was done and where outputs are located.

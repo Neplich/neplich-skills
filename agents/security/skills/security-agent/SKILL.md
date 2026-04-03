@@ -3,34 +3,40 @@ name: security-agent
 description: Security Agent intelligent dispatcher - analyzes security needs and executes appropriate security skills.
 ---
 
-# Security Agent
+# Security Agent Dispatcher
 
 Security Agent 智能入口，根据安全需求自动选择执行合适的安全审查 skills。
 
-## 使用场景
+## Available Skills
 
-- 需要安全审查但不确定检查哪些方面
-- 需要完整的安全审计
-- 准备发布前的安全检查
+- `security-agent:appsec-checklist` - Application security checklist
+- `security-agent:authz-reviewer` - Authorization review
+- `security-agent:dependency-risk-auditor` - Dependency audit
+- `security-agent:privacy-surface-mapper` - Privacy mapping
 
-## 输入
+## Step 1: Analyze Context
 
-用户的自然语言描述，例如：
-- "进行安全审查"
-- "检查认证授权"
-- "审计依赖安全"
+Identify:
+- Is there code to review?
+- Is this pre-release security check or incident response?
+- What specific security concern (auth, deps, privacy, general)?
 
-## 输出
+## Step 2: Select Skill
 
-根据安全需求自动调用相应的 skills 并输出安全报告。
+| User Intent | Skill to Execute |
+|-------------|-----------------|
+| 应用安全检查 | appsec-checklist |
+| 认证授权审查 | authz-reviewer |
+| 依赖审计 | dependency-risk-auditor |
+| 隐私合规 | privacy-surface-mapper |
+| 完整安全审查 | appsec-checklist → authz-reviewer → dependency-risk-auditor → privacy-surface-mapper |
 
-## 使用方式
+If intent is ambiguous, ask the user to clarify before proceeding.
 
-```bash
-/security-agent "进行完整的安全审查"
-/security-agent "检查应用安全漏洞"
-```
+## Step 3: Execute
 
----
+Invoke the selected skill(s) using the Skill tool.
 
-详细实现指南请查看 `_internal/INSTRUCTIONS.md`
+## Step 4: Present Results
+
+Summarize security findings and report locations.

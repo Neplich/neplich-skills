@@ -3,34 +3,40 @@ name: qa-agent
 description: QA Agent intelligent dispatcher - analyzes testing needs and executes appropriate QA skills.
 ---
 
-# QA Agent
+# QA Agent Dispatcher
 
 QA Agent 智能入口，根据测试需求自动选择执行合适的测试 skills。
 
-## 使用场景
+## Available Skills
 
-- 需要执行测试但不确定用哪种测试方式
-- 需要完整的测试流程
-- 需要分析和报告 bug
+- `qa-agent:exploratory-tester` - Exploratory testing
+- `qa-agent:spec-based-tester` - Spec-based testing
+- `qa-agent:bug-analyzer` - Bug analysis and reporting
+- `qa-agent:regression-suite` - Regression test management
 
-## 输入
+## Step 1: Analyze Context
 
-用户的自然语言描述，例如：
-- "测试登录功能"
-- "执行探索性测试"
-- "分析这个 bug"
+Identify:
+- Is there a spec/PRD to test against?
+- Is this a bug report or general testing request?
+- Is this a regression check or new feature test?
 
-## 输出
+## Step 2: Select Skill
 
-根据测试需求自动调用相应的 skills 并输出测试报告。
+| User Intent | Skill to Execute |
+|-------------|-----------------|
+| 探索性测试 | exploratory-tester |
+| 规范测试 | spec-based-tester |
+| 分析 bug | bug-analyzer |
+| 回归测试 | regression-suite |
+| 完整测试 | spec-based-tester → exploratory-tester → regression-suite |
 
-## 使用方式
+If intent is ambiguous, ask the user to clarify before proceeding.
 
-```bash
-/qa-agent "测试用户登录功能"
-/qa-agent "执行完整的测试流程"
-```
+## Step 3: Execute
 
----
+Invoke the selected skill(s) using the Skill tool.
 
-详细实现指南请查看 `_internal/INSTRUCTIONS.md`
+## Step 4: Present Results
+
+Summarize test results and output report locations.

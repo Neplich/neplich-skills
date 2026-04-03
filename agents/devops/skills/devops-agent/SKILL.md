@@ -3,34 +3,40 @@ name: devops-agent
 description: DevOps Agent intelligent dispatcher - analyzes deployment needs and executes appropriate DevOps skills.
 ---
 
-# DevOps Agent
+# DevOps Agent Dispatcher
 
 DevOps Agent 智能入口，根据部署需求自动选择执行合适的运维 skills。
 
-## 使用场景
+## Available Skills
 
-- 需要规划部署但不确定从哪开始
-- 需要完整的 CI/CD 配置
-- 需要审计环境配置
+- `devops-agent:deployment-planner` - Plan deployment strategy
+- `devops-agent:cicd-bootstrap` - Setup CI/CD pipeline
+- `devops-agent:env-config-auditor` - Audit environment configuration
+- `devops-agent:incident-playbook-writer` - Create incident playbooks
 
-## 输入
+## Step 1: Analyze Context
 
-用户的自然语言描述，例如：
-- "规划部署方案"
-- "配置 CI/CD"
-- "审计环境配置"
+Identify:
+- Is there a TRD with deployment requirements?
+- Is this a new deployment setup or an existing one?
+- What environment (local, staging, production)?
 
-## 输出
+## Step 2: Select Skill
 
-根据部署需求自动调用相应的 skills 并输出配置文档。
+| User Intent | Skill to Execute |
+|-------------|-----------------|
+| 部署规划 | deployment-planner |
+| 配置 CI/CD | cicd-bootstrap |
+| 环境审计 | env-config-auditor |
+| 故障手册 | incident-playbook-writer |
+| 完整部署流程 | deployment-planner → cicd-bootstrap → env-config-auditor |
 
-## 使用方式
+If intent is ambiguous, ask the user to clarify before proceeding.
 
-```bash
-/devops-agent "规划部署方案"
-/devops-agent "配置完整的 CI/CD 流程"
-```
+## Step 3: Execute
 
----
+Invoke the selected skill(s) using the Skill tool.
 
-详细实现指南请查看 `_internal/INSTRUCTIONS.md`
+## Step 4: Present Results
+
+Summarize what was configured and where output files are located.

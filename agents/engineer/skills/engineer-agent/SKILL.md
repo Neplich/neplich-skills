@@ -3,36 +3,45 @@ name: engineer-agent
 description: Engineer Agent intelligent dispatcher - analyzes context and automatically selects appropriate engineering skills.
 ---
 
-# Engineer Agent
+# Engineer Agent Dispatcher
 
 Engineer Agent 智能入口，根据项目状态和用户需求自动选择执行合适的工程 skills。
 
-## 使用场景
+## Available Skills
 
-- 不确定该用哪个具体的工程 skill
-- 需要完整的开发流程（分析→实现→测试→交付）
-- 希望 Agent 自动判断当前阶段并执行相应任务
+- `engineer-agent:codebase-analyzer` - Analyze project structure and tech stack
+- `engineer-agent:project-bootstrap` - Initialize new project based on TRD
+- `engineer-agent:feature-implementor` - Implement features based on PM docs
+- `engineer-agent:test-writer` - Write tests based on Test Spec
+- `engineer-agent:debugger` - Debug and fix issues
+- `engineer-agent:delivery` - Git workflow, commits, PRs
 
-## 输入
+## Step 1: Analyze Context
 
-用户的自然语言描述，例如：
-- "实现用户登录功能"
-- "分析这个项目的技术栈"
-- "修复这个 bug"
-- "创建 PR 并交付"
+Check project state:
+- Is this a new project or existing codebase?
+- Are there PM documents available in `docs/`?
+- Is there existing code to analyze?
+- What is the current git status?
 
-## 输出
+## Step 2: Select Skill
 
-根据项目状态和用户意图自动调用相应的 skills 并输出结果。
+| User Intent | Skill to Execute |
+|-------------|-----------------|
+| 分析项目 | codebase-analyzer |
+| 初始化项目 | project-bootstrap |
+| 实现功能 | feature-implementor |
+| 编写测试 | test-writer |
+| 修复 bug | debugger |
+| 创建 PR/交付 | delivery |
+| 完整开发流程 | codebase-analyzer → feature-implementor → test-writer → delivery |
 
-## 使用方式
+If intent is ambiguous, ask the user to clarify before proceeding.
 
-```bash
-/engineer-agent "实现用户登录功能"
-/engineer-agent "分析项目结构"
-/engineer-agent "修复登录失败的 bug"
-```
+## Step 3: Execute
 
----
+Invoke the selected skill(s) using the Skill tool. For multi-step flows, pass context between skills.
 
-详细实现指南请查看 `_internal/INSTRUCTIONS.md`
+## Step 4: Present Results
+
+Summarize execution results and output locations.
