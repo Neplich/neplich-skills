@@ -2,4 +2,9 @@
 .claude/
 .kiro/
 .windsurf/
+
+# superpowers
 docs/superpowers/
+
+# temp
+tmp
