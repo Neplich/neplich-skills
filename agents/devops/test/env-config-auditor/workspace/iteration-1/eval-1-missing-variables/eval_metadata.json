@@ -1,0 +1,45 @@
+{
+  "eval_id": 1,
+  "eval_name": "missing-variables",
+  "prompt": "检查我的项目环境配置是否完整。代码里使用了 DATABASE_URL、API_KEY、REDIS_URL、STRIPE_SECRET_KEY，但当前只有 local 和部分 docker 配置定义了它们。",
+  "with_skill_outputs": [
+    "deploy/ENV_AUDIT.md",
+    "with_skill/outputs/transcript.md"
+  ],
+  "without_skill_outputs": [
+    "without_skill/outputs/transcript.md"
+  ],
+  "assertions": [
+    {
+      "id": "durable-audit-path",
+      "description": "with-skill run should write the audit to a durable path instead of tmp",
+      "target": "with_skill/outputs/transcript.md",
+      "all_of": [
+        "deploy/ENV_AUDIT.md"
+      ],
+      "none_of": [
+        "tmp/config-audit-report.md"
+      ]
+    },
+    {
+      "id": "report-has-sections",
+      "description": "audit report should include missing variables and recommendations sections",
+      "target": "deploy/ENV_AUDIT.md",
+      "all_of": [
+        "# Environment Configuration Audit Report",
+        "## Missing Variables",
+        "## Recommendations"
+      ]
+    },
+    {
+      "id": "checks-cicd-and-deploy",
+      "description": "audit should capture missing values across deploy and CI/CD contexts",
+      "target": "deploy/ENV_AUDIT.md",
+      "all_of": [
+        "API_KEY",
+        "STRIPE_SECRET_KEY",
+        "CI/CD"
+      ]
+    }
+  ]
+}

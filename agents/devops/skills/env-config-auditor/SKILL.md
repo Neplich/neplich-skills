@@ -1,6 +1,6 @@
 ---
 name: env-config-auditor
-description: "Audit environment variables and configuration completeness across local, staging, and production environments. Use when checking deployment readiness, validating configs, or troubleshooting missing environment variables. Trigger on phrases like 'check config', 'audit environment', 'missing env vars', 'config validation'."
+description: "Use when checking deployment readiness, tracing missing environment variables, or reviewing environment configuration coverage across local, CI/CD, and runtime environments."
 ---
 
 # Environment Config Auditor
@@ -13,6 +13,17 @@ Validate environment configuration completeness and security across all deployme
 - After adding new features that need env vars
 - Troubleshooting deployment issues
 - Security audit of configuration
+
+## Context Preflight
+
+Before auditing, inspect the narrowest relevant context:
+
+- code paths that read environment variables
+- `deploy/` config that defines local, Docker, or Helm runtime settings
+- CI/CD config such as `.github/workflows/` or `.gitlab-ci.yml`
+- relevant engineering or PM docs only if they clarify environment-specific constraints
+
+If the repo has no durable deployment/config context yet, suggest running `deployment-planner` first.
 
 ## Step 1 — Scan for Required Environment Variables
 
@@ -37,6 +48,9 @@ List all variables defined
 
 ### 2.3 Check CI/CD secrets documentation
 Check `deploy/SECRETS.md` if exists
+
+### 2.4 Check repo-native CI/CD config
+Check `.github/workflows/` or `.gitlab-ci.yml` for secret names and deploy-time config references
 
 ## Step 3 — Identify Missing Variables
 
@@ -65,9 +79,14 @@ Check for:
 ### 4.3 Missing required secrets
 Verify sensitive vars are not in `.env.example` with real values
 
-## Step 5 — Generate Audit Report
+## Step 5 — Generate Durable Audit Report
 
-Create `tmp/config-audit-report.md`:
+Write the report to a durable project path:
+
+- prefer `docs/devops/{feature-name}/ENV_AUDIT.md` for feature or release scoped audits
+- otherwise use `deploy/ENV_AUDIT.md` for repo-wide deployment audits
+
+Use this structure:
 
 ```markdown
 # Environment Configuration Audit Report
@@ -88,10 +107,18 @@ Create `tmp/config-audit-report.md`:
 
 ## Step 6 — Summary
 
-Output findings and action items to user.
+Output:
+
+- the audit report path
+- the highest-risk missing or unsafe config items
+- whether the next likely step is:
+  - `deployment-planner`
+  - `cicd-bootstrap`
+  - direct Engineer follow-up for missing runtime config
 
 ## Edge Cases
 
 - **No deploy/ directory**: Suggest running `deployment-planner` first
 - **No env vars found**: Verify search patterns for the tech stack
 - **Encrypted secrets**: Skip validation, note in report
+- **Unknown feature scope**: Use `deploy/ENV_AUDIT.md` instead of inventing a feature folder

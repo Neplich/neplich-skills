@@ -1,6 +1,6 @@
 ---
 name: deployment-planner
-description: "Generate deployment configurations for local, Docker, and Kubernetes environments. Use when the user wants to set up deployment infrastructure, create deployment configs, or prepare the project for production deployment. Trigger on phrases like '部署配置', 'deployment setup', 'prepare for deployment', 'create deploy configs', or when TRD specifies deployment requirements."
+description: "Use when a project needs new or updated deployment configuration, when an existing system adds services or deployment targets, or when `deploy/` assets must be created or extended for local, Docker, or Kubernetes environments."
 ---
 
 # Deployment Planner
@@ -9,14 +9,27 @@ Generate three deployment configurations based on project requirements: local de
 
 ## When to Use
 
-- TRD specifies deployment requirements
-- User asks to set up deployment infrastructure
+- TRD or engineering docs specify deployment requirements
+- User asks to set up or update deployment infrastructure
 - Project is ready for production deployment
 - Need to create deployment configurations from scratch
+- Existing deployment config must be extended for a new service, worker, or microservice
+- Existing deployment targets must be expanded or revised, such as adding Docker, Helm, staging, or production variants
+
+## Context Preflight
+
+Before generating anything, inspect:
+
+- the current codebase shape and runtime stack
+- relevant engineering docs and PM deployment requirements when they exist
+- whether `deploy/` already exists
+- whether the work is repo-wide or feature-scoped
+
+If `deploy/` already exists, prefer extension or targeted iteration over blind regeneration.
 
 ## Input Requirements
 
-Read from TRD or ask user:
+Read from engineering docs, PM docs, or ask the user:
 - **Tech stack**: Language, framework, database
 - **Scale**: Expected users, traffic volume
 - **Environment needs**: staging/production split
@@ -30,7 +43,7 @@ Read TRD to extract:
 - Database needs (PostgreSQL, MySQL, Redis, etc.)
 - External dependencies (S3, email service, etc.)
 
-If no TRD exists, ask user:
+If no durable deployment requirements exist, ask the user:
 1. What type of application is this?
 2. What runtime/language does it use?
 3. Does it need a database? Which one?
@@ -202,3 +215,10 @@ Output:
 - **Monorepo**: Generate separate configs for each service
 - **Existing deploy/ directory**: Ask user before overwriting
 - **Unsupported tech stack**: Search for official deployment guides
+
+## Output Rules
+
+- Primary outputs belong under `deploy/`
+- Prefer executable config over prose-only explanation
+- Add `README.md` files only where they help someone use the generated deployment assets
+- Do not automatically create CI/CD config here; hand off to `cicd-bootstrap` when needed

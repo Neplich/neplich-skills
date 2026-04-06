@@ -5,11 +5,11 @@
       "id": 1,
       "name": "missing-variables",
       "prompt": "检查我的项目环境配置是否完整，代码中使用了 DATABASE_URL、API_KEY、REDIS_URL，但只有 local 配置文件定义了它们。",
-      "expected_output": "生成审计报告，指出 docker 和 helm 配置缺失这些变量",
+      "expected_output": "生成 durable 审计报告，指出 deploy 和 CI/CD 配置中缺失的变量",
       "assertions": [
-        "tmp/config-audit-report.md 存在",
+        "deploy/ENV_AUDIT.md 或 docs/devops/{feature}/ENV_AUDIT.md 存在",
         "报告包含 Missing Variables 章节",
-        "列出 API_KEY 在 docker 和 helm 中缺失",
+        "列出 API_KEY 或 STRIPE_SECRET_KEY 在 deploy/CI-CD 中缺失",
         "报告包含 Recommendations 章节"
       ]
     }

@@ -1,6 +1,6 @@
 ---
 name: incident-playbook-writer
-description: "Generate operational runbooks for incident response, rollback procedures, and troubleshooting guides. Use when preparing for production deployment or after incidents occur. Trigger on phrases like 'incident playbook', 'rollback guide', 'troubleshooting', 'operational runbook'."
+description: "Use when a deployed system needs rollback guidance, incident response instructions, troubleshooting runbooks, or on-call preparation tied to the repository's actual deployment setup."
 ---
 
 # Incident Playbook Writer
@@ -13,6 +13,18 @@ Create operational runbooks for common incidents and failure scenarios.
 - After experiencing an incident
 - Setting up on-call procedures
 - Need rollback documentation
+- After adding a new service, worker, or deployment target
+- When existing rollback or troubleshooting docs are outdated
+- When operational procedures must be revised after topology or release-process changes
+
+## Context Preflight
+
+Before generating playbooks, inspect:
+
+- which deployment methods are actually configured under `deploy/`
+- current CI/CD and operational entrypoints if they affect rollback or incident response
+- whether this is a repo-wide runbook or tied to a specific feature/release
+- existing runbooks so you can extend rather than overwrite by habit
 
 ## Step 1 — Identify Deployment Method
 
@@ -20,6 +32,8 @@ Check which deployment methods are configured:
 ```bash
 ls deploy/docker/ deploy/helm/ 2>/dev/null
 ```
+
+Also inspect whether local-only deployment exists and whether rollback is even meaningful for the current setup.
 
 ## Step 2 — Create Rollback Playbook
 
@@ -88,3 +102,9 @@ Output:
 - **No deploy/ directory**: Create it first
 - **Custom deployment**: Ask for specific procedures
 - **Multiple services**: Generate separate playbooks
+
+## Output Rules
+
+- Primary outputs belong in durable operational paths under `deploy/`
+- Tie instructions to the repository's actual deployment methods and commands
+- Do not generate generic on-call prose detached from the configured runtime
