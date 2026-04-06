@@ -25,7 +25,7 @@
 
 - 6 个 Agent dispatcher skills
 - 27 个专业子 skills
-- 文档驱动的 Agent 协作方式
+- 文档驱动、按需调用的 Agent 协作方式
 - 同时支持 Claude Code 和 Codex
 
 > [!NOTE]
@@ -56,7 +56,7 @@
 
 ## 协作方式
 
-这些 Agent 不依赖共享状态机，而是通过文档协作：
+这些 Agent 不依赖共享状态机，而是通过文档和项目资产协作：
 
 ```mermaid
 graph LR
@@ -71,16 +71,17 @@ graph LR
     Security --> Engineer
 ```
 
-一条典型链路是：
+几条常见调用方式是：
 
-1. `pm-agent` 产出 PRD、BRD、TRD、路线图或版本文档。
-2. `designer-agent` 基于需求文档产出 UI/UX 和视觉规范。
-3. `engineer-agent` 读取文档并实现代码、测试和交付动作。
-4. `qa-agent` 补充探索测试、规范测试和回归验证。
-5. `devops-agent` 生成部署方案、CI/CD 和运维手册。
-6. `security-agent` 在发布前进行安全与合规审查。
+1. `pm-agent -> engineer-agent -> qa-agent`
+2. `pm-agent -> designer-agent -> engineer-agent -> qa-agent`
+3. `engineer-agent <-> qa-agent` 的缺陷修复与回归循环
+4. `engineer-agent -> devops-agent`，在需要部署或 CI/CD 时介入
+5. `engineer-agent -> security-agent`，在需要安全审查时介入
 
-如果 QA 在测试中发现的是需求缺口、验收标准问题或优先级变化，而不是单纯实现缺陷，反馈会回到 `pm-agent`，形成产品闭环。
+不是所有项目都必须跑完整条 6-agent 链。每个 agent 都应该先完成自己的角色闭环，只有在需要跨角色协作时才发生 handoff。
+
+如果 QA 在测试中发现的是需求缺口、验收标准问题或优先级变化，而不是单纯实现缺陷，用户可以把同一份反馈材料交给 `pm-agent` 继续处理，而不是一定回到 `engineer-agent`。
 
 ## 快速开始
 

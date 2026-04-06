@@ -25,7 +25,7 @@ It is structured as a reusable skill marketplace with:
 
 - 6 dispatcher skills, one per agent
 - 27 specialist skills
-- document-driven collaboration between agents
+- document-driven, on-demand collaboration between agents
 - installation support for both Claude Code and Codex
 
 ## Agents
@@ -56,7 +56,7 @@ This gives you two ways to work:
 
 ## How They Work Together
 
-These agents collaborate through Markdown documents rather than a shared runtime.
+These agents collaborate through Markdown documents and project assets rather than a shared runtime.
 
 ```mermaid
 graph LR
@@ -71,16 +71,17 @@ graph LR
     Security --> Engineer
 ```
 
-A typical flow looks like this:
+A few common invocation patterns:
 
-1. `pm-agent` creates PRDs, BRDs, TRDs, roadmaps, or release-facing documentation.
-2. `designer-agent` turns product requirements into UI/UX and visual design specs.
-3. `engineer-agent` reads the specs and produces code, tests, and delivery artifacts.
-4. `qa-agent` validates requirements, explores edge cases, and verifies regressions.
-5. `devops-agent` plans deployment, CI/CD, and operational procedures.
-6. `security-agent` reviews the codebase and release surface before launch.
+1. `pm-agent -> engineer-agent -> qa-agent`
+2. `pm-agent -> designer-agent -> engineer-agent -> qa-agent`
+3. `engineer-agent <-> qa-agent` for bugfix and regression loops
+4. `engineer-agent -> devops-agent` when deployment or CI/CD work is needed
+5. `engineer-agent -> security-agent` when security review is needed
 
-When QA finds a requirement gap, acceptance issue, or prioritization problem instead of a pure implementation bug, feedback loops back to `pm-agent`.
+Not every project needs all six agents. Each agent is designed to complete a meaningful role-specific loop on its own, and cross-agent handoff happens only when another role is needed.
+
+When QA finds a requirement gap, acceptance issue, or prioritization problem instead of a pure implementation bug, the user can route the result back to `pm-agent` instead of `engineer-agent`.
 
 ## Quick Start
 

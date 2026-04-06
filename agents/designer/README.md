@@ -1,13 +1,13 @@
 # Designer Agent
 
-负责将产品需求转化为可实现的用户界面设计，填补 PM 文档和 Engineer 实现之间的设计空白。
+负责将 PM 文档转化为可实现的界面与视觉设计文档，作为 PM 和 Engineer 之间的可选设计 handoff。
 
 ## Agent 定位
 
 - **使用者**：个人使用（手动触发）
 - **核心场景**：UI/UX 设计、视觉风格定义、界面原型
-- **输入来源**：PM Agent 的 PRD/BRD/TRD 文档
-- **输出形式**：`docs/design/` 目录下的设计文档（Markdown + Mermaid + ASCII 原型）
+- **输入来源**：PM Agent 的 PRD/BRD/DECISIONS/TRD 文档
+- **输出形式**：`docs/design/{feature-name}/` 目录下的设计文档（Markdown + Mermaid + ASCII 原型）
 - **技术栈无关**：不生成代码，只提供设计规范
 
 ---
@@ -23,10 +23,29 @@
 
 ---
 
+## 运行模型
+
+Designer Agent 是按需调用的设计闭环，不是每个功能开发都必须经过的固定阶段。
+
+它的典型闭环是：
+
+1. 读取 PM 文档
+2. 收敛交互设计和视觉系统
+3. 写出 Engineer 可消费的设计文档
+
+常见 handoff 是：
+
+- `PM -> Designer`
+- `Designer -> Engineer`
+
+如果某个功能不需要单独设计阶段，可以直接走 `PM -> Engineer`。
+
+---
+
 ## 设计流程
 
-```
-PM 文档 (PRD/BRD/TRD)
+```text
+PM 文档 (PRD/BRD/DECISIONS/TRD)
      │
      ▼
 ┌──────────────┐
@@ -49,13 +68,14 @@ PM 文档 (PRD/BRD/TRD)
 
 | PM 文档 | Designer 消费内容 |
 |---------|------------------|
-| PRD | 功能需求、用户故事、使用场景 |
-| BRD | 目标用户、业务目标、品牌调性 |
-| TRD | 技术约束、性能要求、平台限制 |
+| `docs/pm/{feature}/PRD.md` | 功能需求、用户故事、使用场景 |
+| `docs/pm/{feature}/BRD.md` | 目标用户、业务目标、品牌调性 |
+| `docs/pm/{feature}/DECISIONS.md` | 已确认决策、待确认问题、设计约束 |
+| `docs/pm/{feature}/TRD.md` | 技术约束、性能要求、平台限制 |
 
 ### 与 Engineer Agent 的协作流程
 
-1. **PM 完成文档** → PRD/BRD/TRD
+1. **PM 完成文档** → PRD/BRD/DECISIONS/TRD
 2. **Designer 设计界面** → UX 流程 + UI 规范 + 设计系统
 3. **Engineer 实现代码** → 根据设计文档选择技术栈实现
 
@@ -63,13 +83,14 @@ PM 文档 (PRD/BRD/TRD)
 
 ## 输出目录结构
 
-Designer Agent 的输出统一放在 `docs/design/` 目录：
+Designer Agent 的输出统一放在 feature-based 目录：
 
-```
+```text
 docs/
 └── design/
-    ├── ui-ux-spec.md        # UI/UX 设计规范（流程图 + ASCII 原型）
-    └── visual-system.md     # 视觉设计系统（颜色/字体/组件/文案）
+    └── {feature-name}/
+        ├── UI_UX_SPEC.md
+        └── VISUAL_SYSTEM.md
 ```
 
 ---
