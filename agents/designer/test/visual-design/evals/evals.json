@@ -1,25 +1,63 @@
 {
+  "skill_name": "visual-design",
   "evals": [
     {
       "id": "eval-1-minimalist",
       "name": "Minimalist Design System",
       "description": "Create a minimalist design system for a productivity app",
       "prompt": "Create a visual design system for a minimalist productivity app. Target: professionals who value simplicity and focus.",
-      "workspace": "workspace/eval-1-minimalist"
+      "workspace": "workspace/eval-1-minimalist",
+      "expected_output": "完整的视觉系统文档，包含色彩、字体、间距、组件样式和文案规范，并在设计交接处停止",
+      "assertions": [
+        {
+          "name": "产出视觉系统文档",
+          "text": "输出写入 docs/design/{feature-name}/visual-system.md，并包含颜色、字体、间距和组件规则"
+        },
+        {
+          "name": "只做视觉规范不做实现",
+          "text": "输出不包含设计 token 落地代码、CSS/组件实现、工程任务拆解或测试命令"
+        },
+        {
+          "name": "提示交给工程",
+          "text": "如果需要实现设计系统，明确提示由 engineer-agent 接手"
+        }
+      ]
     },
     {
       "id": "eval-2-playful",
       "name": "Playful Design System",
       "description": "Create a playful design system for a consumer app",
       "prompt": "Create a visual design system for a social recipe sharing app. Target: home cooks, casual and fun tone.",
-      "workspace": "workspace/eval-2-playful"
+      "workspace": "workspace/eval-2-playful",
+      "expected_output": "面向消费者产品的视觉系统文档，风格鲜明、包含完整规范，并在设计交接处停止",
+      "assertions": [
+        {
+          "name": "匹配品牌语气",
+          "text": "输出体现 playful 风格，并给出与目标用户匹配的色彩和文案方向"
+        },
+        {
+          "name": "不继续实现",
+          "text": "输出完成视觉系统文档后停止，不继续生成前端代码或实现方案"
+        }
+      ]
     },
     {
       "id": "eval-3-professional",
       "name": "Professional Design System",
       "description": "Create a professional design system for enterprise software",
       "prompt": "Create a visual design system for an enterprise analytics platform. Target: corporate users, trustworthy and authoritative.",
-      "workspace": "workspace/eval-3-professional"
+      "workspace": "workspace/eval-3-professional",
+      "expected_output": "面向企业软件的专业视觉系统文档，强调可信和可访问性，并在设计交接处停止",
+      "assertions": [
+        {
+          "name": "强调可访问性",
+          "text": "输出包含 WCAG 对比度和企业场景下的清晰层级要求"
+        },
+        {
+          "name": "只做规范不落代码",
+          "text": "输出不包含组件代码实现、样式文件改动或工程命令"
+        }
+      ]
     }
   ]
 }

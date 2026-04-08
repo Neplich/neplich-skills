@@ -85,6 +85,9 @@ graph LR
 
 ## 快速开始
 
+> [!NOTE]
+> 对仓库里的本地验证脚本和 eval runner，优先使用 `uv run ...`。
+
 ### Claude Code
 
 ```bash
@@ -194,6 +197,7 @@ agents/{agent}/
 
 - 新增 Agent 或 skill 时，优先遵循现有 `agents/*` 目录结构
 - `CLAUDE.md` 与 `AGENTS.md` 需要保持一致
+- 仓库内基于 Python 的验证脚本和 eval helper 优先通过 `uv run` 执行
 
 <div align="center">
 

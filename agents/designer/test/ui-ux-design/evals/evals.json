@@ -1,25 +1,85 @@
 {
+  "skill_name": "ui-ux-design",
   "evals": [
     {
       "id": "eval-1-saas-dashboard",
       "name": "SaaS Dashboard Design",
       "description": "Design UI/UX for a project management SaaS dashboard",
       "prompt": "Design the UI/UX for a project management dashboard. Users need to view projects, tasks, team members, and activity timeline. Target audience: small teams (5-20 people).",
-      "workspace": "workspace/eval-1-saas-dashboard"
+      "workspace": "workspace/eval-1-saas-dashboard",
+      "expected_output": "结构化的 UI/UX 设计文档，包含用户流程、页面布局、组件清单和响应式说明，并在设计交接处停止",
+      "assertions": [
+        {
+          "name": "产出设计文档",
+          "text": "输出写入 docs/design/{feature-name}/ui-ux-spec.md，并包含用户旅程、ASCII 布局和交互说明"
+        },
+        {
+          "name": "只做设计不做实现",
+          "text": "输出停留在设计 handoff，不生成代码修改、工程实现步骤或测试执行内容"
+        },
+        {
+          "name": "提示下一角色",
+          "text": "如果需要继续实现，明确提示由 engineer-agent 接手"
+        }
+      ]
     },
     {
       "id": "eval-2-ecommerce",
       "name": "E-commerce Product Page",
       "description": "Design UI/UX for an e-commerce product listing and detail pages",
       "prompt": "Design the UI/UX for an e-commerce site selling handmade crafts. Need product listing, filters, product detail page, and shopping cart. Target: mobile-first design.",
-      "workspace": "workspace/eval-2-ecommerce"
+      "workspace": "workspace/eval-2-ecommerce",
+      "expected_output": "结构化的电商 UI/UX 设计文档，覆盖页面清单、移动端布局和状态说明，并在设计交接处停止",
+      "assertions": [
+        {
+          "name": "覆盖移动端设计",
+          "text": "输出包含 mobile-first 布局、筛选和购物车相关页面与交互说明"
+        },
+        {
+          "name": "只做设计不做实现",
+          "text": "输出不包含代码、文件补丁、命令行步骤或实现任务拆解"
+        }
+      ]
     },
     {
       "id": "eval-3-with-reference",
       "name": "Design with Reference Website",
       "description": "Design UI/UX using a reference website for style inspiration",
       "prompt": "Design a landing page for a productivity app. Reference website: https://linear.app for clean, modern aesthetic.",
-      "workspace": "workspace/eval-3-with-reference"
+      "workspace": "workspace/eval-3-with-reference",
+      "expected_output": "基于参考网站模式提炼出的 UI/UX 设计文档，包含参考分析与交互规格，并在设计交接处停止",
+      "assertions": [
+        {
+          "name": "分析参考网站",
+          "text": "输出包含对参考网站的信息架构、布局或交互模式的提炼"
+        },
+        {
+          "name": "交接而非实现",
+          "text": "输出完成设计文档后停止，不继续进入前端实现或工程编码"
+        }
+      ]
+    },
+    {
+      "id": "eval-4-pm-spec-handoff",
+      "name": "PM Spec Handoff Stops Before Implementation",
+      "description": "Read existing PM spec and current UI context, then stop at design handoff instead of drifting into implementation",
+      "prompt": "PM 已经产出 billing-notification-settings 的 PRD/BRD/DECISIONS/TRD。请 designer agent 阅读这些 spec，并基于现有设置页补充 UI/UX 设计文档。设计完成后停止在 handoff，不要直接开始修改代码或输出实现步骤。",
+      "workspace": "workspace/eval-4-pm-spec-handoff",
+      "expected_output": "读取 PM spec 和现有页面上下文后，产出设计文档并明确停止在 design handoff，不进入工程实现",
+      "assertions": [
+        {
+          "name": "spec 只作为设计输入",
+          "text": "输出明确说明 PM spec 仅用于设计，不授权 Designer 进入代码实现"
+        },
+        {
+          "name": "完成后交给工程",
+          "text": "输出完成设计文档后，明确提示下一步交给 engineer-agent"
+        },
+        {
+          "name": "禁止实现漂移",
+          "text": "输出不包含代码修改、实现步骤拆解、测试命令或补丁动作"
+        }
+      ]
     }
   ]
 }

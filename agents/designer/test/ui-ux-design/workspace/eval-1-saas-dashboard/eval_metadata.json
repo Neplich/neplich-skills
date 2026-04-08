@@ -1,0 +1,40 @@
+{
+  "eval_id": 1,
+  "eval_name": "saas-dashboard-design-structure",
+  "workspace_root": "agents/designer/test/ui-ux-design/workspace/eval-1-saas-dashboard",
+  "prompt": "Design the UI/UX for a project management dashboard. Users need to view projects, tasks, team members, and activity timeline. Target audience: small teams (5-20 people).",
+  "with_skill_outputs": [
+    "with_skill/docs/design/ui-ux-spec.md"
+  ],
+  "without_skill_outputs": [
+    "without_skill/outputs/design-notes.md"
+  ],
+  "assertions": [
+    {
+      "id": "with_skill_has_structured_spec",
+      "description": "With skill output contains the expected UI/UX spec structure",
+      "target": "with_skill/docs/design/ui-ux-spec.md",
+      "all_of": [
+        "# UI/UX Design Specification",
+        "## 2. User Journey",
+        "```mermaid",
+        "## 4. Page Layouts",
+        "## 5. Component List",
+        "## 7. Responsive Design"
+      ]
+    },
+    {
+      "id": "without_skill_is_unstructured",
+      "description": "Baseline output stays vague and misses structured design artifacts",
+      "target": "without_skill/outputs/design-notes.md",
+      "all_of": [
+        "Maybe a sidebar for filters."
+      ],
+      "none_of": [
+        "```mermaid",
+        "## 5. Component List",
+        "## 7. Responsive Design"
+      ]
+    }
+  ]
+}

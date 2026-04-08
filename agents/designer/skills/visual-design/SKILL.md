@@ -3,6 +3,23 @@ name: visual-design
 description: Define visual design system including colors, typography, components, and copy guidelines. Avoids generic AI aesthetics.
 ---
 
+## Hard Boundaries
+
+This skill defines a visual system only.
+
+Allowed actions:
+- Read PM docs and existing design docs
+- Choose an aesthetic direction and justify it
+- Define color, typography, spacing, component, and copy guidelines
+- Write or update `docs/design/{feature-name}/visual-system.md`
+
+Forbidden actions:
+- Writing or modifying source code, tests, design tokens in code, configs, or deployment files
+- Emitting implementation plans, code snippets for production use, shell commands, or engineer task lists
+- Calling Engineer skills or continuing into implementation after the visual system is complete
+
+If the input includes a completed PM or UX spec, use it to shape the visual system and stop at design handoff.
+
 ## Execution Steps
 
 ### Step 1: Gather Context
@@ -10,6 +27,8 @@ description: Define visual design system including colors, typography, component
 1. **Read PM documents**:
    - BRD: brand tone, target audience, business goals
    - PRD: product type and features
+   - DECISIONS: confirmed design constraints and trade-offs
+   - TRD: platform constraints that affect presentation choices
    - UI/UX spec (if exists): component list
 
 2. **Understand product type**:
@@ -201,6 +220,18 @@ Create `docs/design/{feature-name}/visual-system.md` with this structure:
 - [ ] Spacing follows consistent scale
 - [ ] Component styles are complete
 - [ ] Copy guidelines match brand tone
+
+## Completion Criteria
+
+This skill is complete only when:
+- `docs/design/{feature-name}/visual-system.md` has been written or updated
+- The final response summarizes the visual system deliverable and its file location
+- The workflow stops at design handoff
+
+After completion:
+- Do not propose code changes
+- Do not generate implementation steps
+- If implementation is required, tell the user to invoke `engineer-agent`
 
 ## Output Location
 

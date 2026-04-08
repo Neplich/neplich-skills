@@ -21,7 +21,7 @@ Codex 会先反问你两个问题，再执行安装：
 - `engineer-agent`：代码分析、项目搭建、功能实现、测试、调试、交付
 - `qa-agent`：探索测试、规范测试、Bug 分析、回归验证
 - `devops-agent`：部署规划、CI/CD、环境审计、故障处理
-- `designer-agent`：UI/UX 设计、视觉系统、界面规范
+- `designer-agent`：UI/UX 设计、视觉系统、界面规范，仅产出设计文档不写代码
 - `security-agent`：应用安全、权限审查、依赖风险、隐私映射
 
 如果选择 `selected`，支持一次选择多个 Agent。

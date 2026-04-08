@@ -51,6 +51,12 @@ PM Agent → Designer Agent → Engineer Agent → QA Agent → DevOps Agent →
 - Designer reads `docs/pm/{feature}/PRD.md` and `docs/pm/{feature}/BRD.md`
 - Security reads `docs/pm/{feature}/` and the codebase
 
+**Role boundaries**
+
+- Designer Agent stops at design deliverables under `docs/design/{feature}/` and must not implement code
+- Engineer Agent is the role that turns PM and Designer documents into code, tests, and delivery artifacts
+- Reading a PM spec or design spec does not authorize Designer Agent to continue into implementation
+
 ## Development Workflow
 
 > [!IMPORTANT]

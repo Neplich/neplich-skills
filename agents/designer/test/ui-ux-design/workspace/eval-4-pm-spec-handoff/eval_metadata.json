@@ -1,0 +1,63 @@
+{
+  "eval_id": 4,
+  "eval_name": "pm-spec-handoff-stops-before-implementation",
+  "workspace_root": "agents/designer/test/ui-ux-design/workspace/eval-4-pm-spec-handoff",
+  "prompt": "PM 已经产出 billing-notification-settings 的 PRD/BRD/DECISIONS/TRD。请 designer agent 阅读这些 spec，并基于现有设置页补充 UI/UX 设计文档。设计完成后停止在 handoff，不要直接开始修改代码或输出实现步骤。",
+  "with_skill_outputs": [
+    "with_skill/outputs/transcript.md",
+    "with_skill/docs/design/billing-notification-settings/ui-ux-spec.md"
+  ],
+  "without_skill_outputs": [
+    "without_skill/outputs/transcript.md"
+  ],
+  "assertions": [
+    {
+      "id": "reads_pm_spec_as_design_input",
+      "description": "Treats PM spec as design input rather than implementation authorization",
+      "target": "with_skill/outputs/transcript.md",
+      "all_of": [
+        "## Input Review",
+        "PM spec is design input only.",
+        "Existing implementation remains out of scope for Designer."
+      ]
+    },
+    {
+      "id": "creates_design_handoff_doc",
+      "description": "Produces a UI/UX handoff doc for Engineer consumption",
+      "target": "with_skill/docs/design/billing-notification-settings/ui-ux-spec.md",
+      "all_of": [
+        "# UI/UX Design Specification",
+        "## 2. User Journey",
+        "## 4. Page Layouts",
+        "## 6. Interaction Behaviors"
+      ]
+    },
+    {
+      "id": "stops_before_engineering",
+      "description": "Stops at design handoff and explicitly routes implementation to Engineer",
+      "target": "with_skill/outputs/transcript.md",
+      "all_of": [
+        "## Design Handoff",
+        "Designer stops here.",
+        "Next role: `engineer-agent`."
+      ],
+      "none_of": [
+        "Modify `src/pages/settings/BillingNotificationsPage.tsx`",
+        "Run `npm test`",
+        "git add",
+        "apply_patch",
+        "Implement the React component"
+      ]
+    },
+    {
+      "id": "without_skill_shows_bad_drift",
+      "description": "Baseline transcript demonstrates the undesired implementation drift",
+      "target": "without_skill/outputs/transcript.md",
+      "all_of": [
+        "Modify `src/pages/settings/BillingNotificationsPage.tsx`",
+        "Implement the React component",
+        "Run `npm test`"
+      ]
+    }
+  ]
+}

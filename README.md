@@ -85,6 +85,9 @@ When QA finds a requirement gap, acceptance issue, or prioritization problem ins
 
 ## Quick Start
 
+> [!NOTE]
+> For repository validation helpers and local eval runners, prefer `uv run ...`.
+
 ### Claude Code
 
 ```bash
@@ -193,6 +196,7 @@ agents/{agent}/
 - Follow the existing `agents/*` structure when adding new agents or specialist skills
 - Keep `CLAUDE.md` and `AGENTS.md` in sync
 - Treat `docs/superpowers/` as working docs only; it is not meant for versioned public documentation
+- Prefer `uv run` for repo-local Python-based validation helpers and eval scripts
 
 <div align="center">
 

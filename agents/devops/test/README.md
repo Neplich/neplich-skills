@@ -11,7 +11,7 @@
 运行方式：
 
 ```bash
-python3 agents/devops/test/run_eval.py \
+uv run agents/devops/test/run_eval.py \
   agents/devops/test/env-config-auditor/workspace/iteration-1/eval-1-missing-variables/eval_metadata.json
 ```
 

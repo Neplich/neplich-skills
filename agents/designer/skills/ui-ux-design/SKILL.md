@@ -3,6 +3,23 @@ name: ui-ux-design
 description: Design UI/UX flows and specifications with optional reference website analysis. Outputs user journeys, page layouts, and ASCII prototypes.
 ---
 
+## Hard Boundaries
+
+This skill produces UX and UI design documentation only.
+
+Allowed actions:
+- Read PM docs and existing design docs
+- Analyze reference websites for design patterns
+- Create user journeys, page inventories, ASCII layouts, component lists, and interaction notes
+- Write or update `docs/design/{feature-name}/ui-ux-spec.md`
+
+Forbidden actions:
+- Writing or modifying source code, tests, build files, or deployment config
+- Emitting code patches, implementation checklists, shell commands, or file-by-file coding instructions
+- Calling Engineer skills or continuing into implementation after the design doc is complete
+
+If the input includes a completed PM spec, treat it as design input only, not as permission to implement.
+
 ## Execution Steps
 
 ### Step 1: Gather Requirements
@@ -10,6 +27,7 @@ description: Design UI/UX flows and specifications with optional reference websi
 1. **Read PM documents** from `docs/` directory:
    - PRD: feature requirements, user stories, use cases
    - BRD: target users, business goals, brand tone
+   - DECISIONS: confirmed product decisions, open questions, design constraints
    - TRD: technical constraints, performance requirements
 
 2. **Ask for reference websites** using AskUserQuestion:
@@ -204,6 +222,18 @@ Before finalizing, ensure:
 - [ ] Interactions are well-defined
 - [ ] Responsive design is addressed
 - [ ] Reference patterns (if any) are properly adapted
+
+## Completion Criteria
+
+This skill is complete only when:
+- `docs/design/{feature-name}/ui-ux-spec.md` has been written or updated
+- The final response summarizes the design deliverable and its file location
+- The workflow stops at design handoff
+
+After completion:
+- Do not propose code changes
+- Do not generate implementation steps
+- If build work is requested next, tell the user to invoke `engineer-agent`
 
 ## Output Location
 
