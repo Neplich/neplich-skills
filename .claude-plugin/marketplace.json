@@ -4,13 +4,13 @@
     "name": "Neplich"
   },
   "metadata": {
-    "description": "Agent skills for Product Manager, Engineer, QA, DevOps, Designer and Security workflows",
+    "description": "Role-based dispatcher agents for PM, engineering, QA, DevOps, design, and security workflows with generalized routing to specialist skills",
     "version": "1.0.0"
   },
   "plugins": [
     {
       "name": "pm-agent",
-      "description": "Product planning and documentation workflows.",
+      "description": "Dispatcher for product discovery, scope shaping, specs, competitive research, release communication, roadmaps, and GitHub project status.",
       "source": "./agents/product_manager",
       "strict": false,
       "skills": [
@@ -26,7 +26,7 @@
     },
     {
       "name": "engineer-agent",
-      "description": "Engineering analysis, implementation, testing, and delivery.",
+      "description": "Dispatcher for repo analysis, project bootstrap, implementation, debugging, testing, and delivery.",
       "source": "./agents/engineer",
       "strict": false,
       "skills": [
@@ -41,7 +41,7 @@
     },
     {
       "name": "qa-agent",
-      "description": "QA workflows for testing, bug analysis, and regression coverage.",
+      "description": "Dispatcher for acceptance testing, exploratory testing, bug analysis, and regression verification.",
       "source": "./agents/qa",
       "strict": false,
       "skills": [
@@ -54,7 +54,7 @@
     },
     {
       "name": "devops-agent",
-      "description": "Deployment, CI/CD, environment, and incident response workflows.",
+      "description": "Dispatcher for deployment planning, CI/CD automation, environment audits, and rollback/runbook preparation.",
       "source": "./agents/devops",
       "strict": false,
       "skills": [
@@ -67,7 +67,7 @@
     },
     {
       "name": "designer-agent",
-      "description": "UI/UX and visual design workflows.",
+      "description": "Dispatcher for UX flows, UI structure, wireframes, reference-pattern analysis, and visual design systems.",
       "source": "./agents/designer",
       "strict": false,
       "skills": [
@@ -78,7 +78,7 @@
     },
     {
       "name": "security-agent",
-      "description": "Application security, authz, dependency, and privacy reviews.",
+      "description": "Dispatcher for application security, auth/authz review, dependency risk, and privacy/data-flow reviews.",
       "source": "./agents/security",
       "strict": false,
       "skills": [

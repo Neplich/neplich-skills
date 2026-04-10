@@ -1,11 +1,11 @@
 # QA Agent
 
-智能探索型质量保证 Agent，既能执行基于规范的标准测试，也能自主探索发现文档未覆盖的问题。
+面向验证与证据输出的 QA dispatcher 型 Agent。它负责识别请求是规范验收、探索测试、缺陷分析还是修复后的回归验证，并把请求路由到最合适的 QA skill。
 
 ## Agent 定位
 
 - **使用者**：个人使用（手动触发）
-- **核心场景**：UI 交互测试、边界测试、探索测试、Bug 分析、回归验证
+- **核心场景**：规范验收、UI 交互测试、边界测试、探索测试、Bug 复现与分析、回归验证、发布前测试把关
 - **输入来源**：PM Agent 的 Test Spec + PRD + TRD
 - **输出形式**：测试报告（简洁版）+ Bug 报告（详细版，Markdown 或 GitHub Issue）
 - **测试范围**：UI 交互测试 + 边界测试（补充 Engineer 未覆盖的场景）
@@ -42,6 +42,22 @@
 3. **发现 Bug** → 使用 `bug-analyzer` 生成报告
 4. **Engineer 修复** → 提交修复代码
 5. **QA 回归验证** → 使用 `regression-suite` 验证修复
+
+## 入口路由策略
+
+QA Agent 按验证目标来路由：
+
+- 基于 PRD / TRD / Test Spec 的规范验证、验收测试 -> `spec-based-tester`
+- 冒烟测试、探索性测试、UI 边界探索 -> `exploratory-tester`
+- bug 复现、失败归因、详细缺陷报告 -> `bug-analyzer`
+- 修复后的复测、回归集验证、发布前已知问题复核 -> `regression-suite`
+
+默认兜底规则：
+
+- 有明确 spec 或验收目标时优先 `spec-based-tester`
+- 没有稳定 spec 但用户要“走一遍看看”时优先 `exploratory-tester`
+- 从失败现象或缺陷单开始时优先 `bug-analyzer`
+- 从“这个修复好了没有”开始时优先 `regression-suite`
 
 ---
 

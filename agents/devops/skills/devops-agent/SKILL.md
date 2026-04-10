@@ -1,68 +1,94 @@
 ---
 name: devops-agent
-description: Use when the user needs deployment planning, CI/CD setup, environment configuration auditing, or incident readiness for an implemented system.
+description: Route DevOps work to the right downstream skill. Use when the user needs deployment planning, runtime packaging, Docker or Helm setup, CI/CD automation, environment variable auditing, release readiness checks, rollback/runbook documentation, or operational hardening for a repo or service. Trigger on phrases like "怎么部署", "补 docker/helm", "配 CI", "加 GitHub Actions", "环境变量对齐一下", "检查 secrets", "发布前运维准备", "写回滚手册", "做 runbook", or any DevOps-oriented request that should be routed before execution."
 ---
 
 # DevOps Agent Dispatcher
 
-`devops-agent` 是运维能力入口。它负责识别当前任务属于部署规划、CI/CD、配置审计还是故障手册，并把请求路由到正确的下游 DevOps skill。
+`devops-agent` is the DevOps capability entry point. It recognizes whether the
+request is about deployment setup, delivery automation, configuration
+governance, or operational readiness, then routes to the narrowest downstream
+DevOps skill.
 
 ## Role Boundary
 
 `devops-agent` is responsible for:
 
-- identifying the primary DevOps intent
+- identifying the primary DevOps outcome the user wants
 - selecting the narrowest downstream DevOps skill
-- sequencing multiple DevOps skills only when the user clearly wants a broader operational workflow
-- asking route-level clarification only when the request is ambiguous
+- sequencing multiple DevOps skills only when the user clearly wants a broader
+  operational workflow
+- asking at most one route-level clarification question when the target outcome
+  is truly ambiguous
 
 `devops-agent` is not responsible for:
 
-- generating all deployment configs itself
-- replacing `deployment-planner`, `cicd-bootstrap`, `env-config-auditor`, or `incident-playbook-writer`
+- replacing the downstream implementation protocol of
+  `deployment-planner`, `cicd-bootstrap`, `env-config-auditor`, or
+  `incident-playbook-writer`
 - forcing every feature through a DevOps phase
-- acting as a cross-repo orchestrator
+- acting as a general incident response or feature implementation agent
 
 ## Available Skills
 
-- `devops-agent:deployment-planner` - Generate deployment configs under `deploy/`
-- `devops-agent:cicd-bootstrap` - Generate CI/CD automation config
-- `devops-agent:env-config-auditor` - Audit env/config completeness and security
-- `devops-agent:incident-playbook-writer` - Create rollback and incident playbooks
+- `devops-agent:deployment-planner` - Deployment assets, packaging, runtime targets, `deploy/` expansion
+- `devops-agent:cicd-bootstrap` - CI/CD workflows, pipeline automation, release paths
+- `devops-agent:env-config-auditor` - Environment variable, config, and secret coverage audits
+- `devops-agent:incident-playbook-writer` - Rollback, runbook, and operational procedure docs
 
-## Routing Protocol
+## Routing Signals
 
-1. Inspect the current operational context:
-   - Is there implementation ready to deploy?
-   - Is there a `deploy/` directory already?
-   - Is CI/CD already configured?
-   - Is this feature-scoped work or repo-wide operational work?
-2. Read the narrowest useful upstream context:
-   - relevant engineering docs when deployment or config depends on technical design
-   - release-facing PM docs only when scale, availability, or rollout requirements matter
-   - QA status only when deployment readiness depends on validation state
-3. Choose the narrowest downstream skill.
-4. If the user clearly wants a broader operational workflow, define the follow-up sequence.
-5. If intent is ambiguous, ask one route-level clarification question.
+Route by the operational outcome the user wants.
 
-## Default Routing Table
+- Deployment setup, Docker, Helm, runtime packaging, local/dev/prod deployment
+  assets, "怎么部署", "补 deploy", "容器化", "加 helm"
+  -> `deployment-planner`
+- CI/CD, workflows, pipelines, release automation, build-and-deploy paths,
+  "配 GitHub Actions", "上 CI", "自动部署"
+  -> `cicd-bootstrap`
+- Env vars, secrets coverage, config drift, missing runtime settings,
+  "缺环境变量", "检查配置", "对齐 secrets"
+  -> `env-config-auditor`
+- Rollback guides, incident runbooks, on-call procedures, operational docs,
+  "回滚手册", "故障手册", "runbook", "发布出问题怎么办"
+  -> `incident-playbook-writer`
 
-| User Intent | Skill to Execute |
-|-------------|-----------------|
-| 部署规划 / `deploy/` 新建或扩展 | `deployment-planner` |
-| 配置 CI/CD | `cicd-bootstrap` |
-| 环境变量 / 配置审计 | `env-config-auditor` |
-| 回滚 / 故障手册 | `incident-playbook-writer` |
+## Default Routes
+
+| DevOps Outcome | Primary Skill |
+| --- | --- |
+| 新建或扩展部署配置、容器化、运行时打包、`deploy/` 资产 | `deployment-planner` |
+| CI/CD、workflow、pipeline、发布自动化 | `cicd-bootstrap` |
+| 环境变量、secrets、配置覆盖率、运行时配置审计 | `env-config-auditor` |
+| 回滚文档、故障排查手册、运维 runbook | `incident-playbook-writer` |
+
+If the request is DevOps-shaped but underspecified, use these defaults:
+
+- if it is about getting software deployable -> `deployment-planner`
+- if it is about automating an existing release path -> `cicd-bootstrap`
+- if it is about readiness or missing configuration -> `env-config-auditor`
+- if it is about operational response or rollback guidance -> `incident-playbook-writer`
 
 ## Common Multi-Skill Chains
 
-Use these only when the user wants the broader outcome:
+Use these only when the user clearly wants the broader operational workflow:
 
 - 首次部署准备 -> `deployment-planner` -> `cicd-bootstrap` -> `env-config-auditor`
 - 发布前运维准备 -> `env-config-auditor` -> `incident-playbook-writer`
 - 现有部署补自动化 -> `cicd-bootstrap` -> `env-config-auditor`
+- 新增运行目标后补运维手册 -> `deployment-planner` -> `incident-playbook-writer`
 
 Do not expand into a full operational chain by default.
+
+## Escalation Rules
+
+- Ask one route-level clarification question only when two routes are equally
+  plausible and repo context cannot resolve the difference.
+- If deployment and CI/CD are both needed but one is clearly foundational,
+  route to the foundational step first.
+- If the user is actually asking for application code changes, tests, or
+  product/design work, keep the DevOps route narrow and make the next handoff
+  explicit to the owning agent.
 
 ## Output Behavior
 
@@ -70,7 +96,6 @@ When routing is complete:
 
 - state which DevOps skill should handle the request
 - if relevant, state the follow-up DevOps chain
-- make it clear whether the expected outputs are:
-  - executable artifacts under `deploy/`
-  - CI/CD config under repo-native paths such as `.github/workflows/`
-  - durable operational docs under `docs/devops/` or `deploy/`
+- make it clear whether outputs are expected under `deploy/`,
+  repo-native CI/CD paths such as `.github/workflows/`, or durable operational
+  docs under `docs/devops/` or `deploy/`
