@@ -109,6 +109,8 @@ def build_claude_command(
     prompt: str,
     *,
     with_skill: bool,
+    entry_command: str = "/idea-to-spec",
+    plugin_dir: str = "agents/product_manager",
 ) -> list[str]:
     command = [
         "claude",
@@ -121,9 +123,16 @@ def build_claude_command(
     ]
 
     if with_skill:
-        plugin_dir = repo_root() / "agents/product_manager"
-        command.extend(["--plugin-dir", str(plugin_dir)])
-        command.append(f"/idea-to-spec {prompt}")
+        plugin_root = Path(plugin_dir)
+        if not plugin_root.is_absolute():
+            plugin_root = repo_root() / plugin_root
+
+        normalized_entry = entry_command.strip()
+        if not normalized_entry.startswith("/"):
+            normalized_entry = f"/{normalized_entry}"
+
+        command.extend(["--plugin-dir", str(plugin_root)])
+        command.append(f"{normalized_entry} {prompt}")
         return command
 
     command.append(prompt)
@@ -208,6 +217,8 @@ def generate_eval_outputs(
             command = build_claude_command(
                 meta["prompt"],
                 with_skill=with_skill,
+                entry_command=meta.get("entry_command", "/idea-to-spec"),
+                plugin_dir=meta.get("plugin_dir", "agents/product_manager"),
             )
             transcript_path = execution_root / label / "outputs/transcript.md"
             status_path = execution_root / label / "outputs/run_status.json"

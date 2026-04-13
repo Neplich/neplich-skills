@@ -1,6 +1,6 @@
 ---
 name: pm-agent
-description: Route PM work to the right downstream skill. Use when the user needs product discovery, idea shaping, requirement clarification, scope definition, spec creation or updates, competitor research, release communication, roadmap planning, changelog generation, GitHub project status, or is describing a new app or feature in an empty or new repo before engineering should start. Trigger on phrases like "我想做一个...", "做个 AI 助手", "先做 PRD", "先梳理需求", "定义范围", "空目录里做个...", "已有 spec 要改", "竞品分析", "battlecard", "生成 changelog", "写发版说明", "做路线图", "项目状态", "milestone 进度", "有哪些 PR 卡住了", or any PM-level request that should be routed before execution."
+description: Route PM work to the right downstream skill. Use when the user needs product discovery, idea shaping, requirement clarification, scope definition, spec creation or updates, competitor research, release communication, roadmap planning, changelog generation, GitHub project status, or is describing a new app or feature in an empty or new repo before engineering should start. Trigger on phrases like "我想做一个...", "做个 AI 助手", "AI 对话助手", "左侧会话历史右侧对话页", "聊天 UI 结构", "先做 PRD", "先梳理需求", "定义范围", "空目录里做个...", "已有 spec 要改", "竞品分析", "battlecard", "生成 changelog", "写发版说明", "做路线图", "项目状态", "milestone 进度", "有哪些 PR 卡住了", or any PM-level request that should be routed before execution."
 ---
 
 # PM Agent Dispatcher
@@ -125,11 +125,26 @@ explicitly requested or strongly implied by the user's end goal.
   path first. Point the next step to `engineer-agent` only after PM scope is
   stable or the user explicitly opts out of PM.
 
+## Downstream Execution Contract
+
+- After selecting the downstream PM skill, immediately continue with that
+  skill's workflow in the same response.
+- Do not stop at a meta-routing answer.
+- Do not ask the user whether they want you to invoke the routed PM skill.
+- Do not tell the user to run `/pm-agent:idea-to-spec` or another manual
+  sub-skill command unless they explicitly asked for the command syntax.
+- If the routed skill is `idea-to-spec`, switch straight into its Phase 0
+  context summary and lane selection, then continue with the next requirement
+  shaping step in the same turn.
+- Only remain at the routing layer when a single clarification question is
+  required to disambiguate two materially different PM outcomes.
+
 ## Output Behavior
 
 When routing is complete:
 
-- state which PM skill should handle the request
-- if relevant, state the follow-up PM chain
+- briefly anchor which PM skill was selected when that context is useful
+- immediately continue with the routed skill's protocol instead of asking for
+  permission to proceed
 - preserve settled PM context so the downstream skill does not need to reopen
   route decisions

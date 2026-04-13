@@ -22,6 +22,19 @@ def load_runner_module():
 
 
 class TranscriptRunnerTests(unittest.TestCase):
+    def test_build_claude_command_supports_custom_entry_command(self):
+        runner = load_runner_module()
+
+        command = runner.build_claude_command(
+            "我想做一个 AI 对话助手",
+            with_skill=True,
+            entry_command="/pm-agent",
+            plugin_dir="agents/product_manager",
+        )
+
+        self.assertIn("--plugin-dir", command)
+        self.assertEqual(command[-1], "/pm-agent 我想做一个 AI 对话助手")
+
     def test_prepare_execution_workspace_removes_reserved_and_custom_outputs(self):
         runner = load_runner_module()
 

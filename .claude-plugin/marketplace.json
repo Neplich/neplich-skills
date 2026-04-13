@@ -10,7 +10,7 @@
   "plugins": [
     {
       "name": "pm-agent",
-      "description": "Dispatcher for product discovery, scope shaping, specs, empty/new-repo app ideas before coding, competitive research, release communication, roadmaps, and GitHub project status.",
+      "description": "Dispatcher for product discovery, scope shaping, specs, empty/new-repo app ideas before coding, AI assistant/chat UI concept shaping, competitive research, release communication, roadmaps, and GitHub project status.",
       "source": "./agents/product_manager",
       "strict": false,
       "skills": [

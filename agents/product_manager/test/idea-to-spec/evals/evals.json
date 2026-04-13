@@ -96,6 +96,26 @@
           "text": "明确推荐 project-init、PRD 骨架、DECISIONS 记录或等价的文档化下一步"
         }
       ]
+    },
+    {
+      "id": 5,
+      "name": "pm-agent-direct-delegation",
+      "prompt": "我现在想做一个 AI 对话助手，按左右结构进行创建，左侧是对话历史，右侧是对话页",
+      "expected_output": "通过 pm-agent 入口先识别为 PM-first 的新产品需求，再直接继续进入 idea-to-spec 的上下文摘要与需求收敛流程；不会停在'推荐技能'或'是否需要我帮你唤起'这类 dispatcher 元回答。",
+      "assertions": [
+        {
+          "name": "入口 dispatcher 直接下钻",
+          "text": "不会只停在路由说明，而是直接进入 idea-to-spec 风格的上下文摘要或需求梳理"
+        },
+        {
+          "name": "不反问是否调用子 skill",
+          "text": "不会出现是否需要我帮你唤起 idea-to-spec 或要求手动执行 /pm-agent:idea-to-spec"
+        },
+        {
+          "name": "进入 PM 流程",
+          "text": "在同一轮里继续提炼产品定位、功能边界、MVP 或其他需求收敛问题"
+        }
+      ]
     }
   ]
 }

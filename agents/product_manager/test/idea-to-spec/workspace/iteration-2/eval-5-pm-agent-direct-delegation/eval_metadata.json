@@ -1,0 +1,54 @@
+{
+  "eval_id": 5,
+  "eval_name": "pm-agent-direct-delegation",
+  "workspace_root": "agents/product_manager/test/idea-to-spec/workspace/iteration-2/eval-5-pm-agent-direct-delegation",
+  "entry_command": "/pm-agent",
+  "prompt": "我现在想做一个 AI 对话助手，按左右结构进行创建，左侧是对话历史，右侧是对话页",
+  "with_skill_outputs": [
+    "with_skill/outputs/transcript.md"
+  ],
+  "without_skill_outputs": [
+    "without_skill/outputs/transcript.md"
+  ],
+  "assertions": [
+    {
+      "id": "routes_to_pm_first_flow",
+      "description": "Routes the raw prompt into PM-first idea-to-spec flow instead of stopping at dispatcher narration",
+      "target": "with_skill/outputs/transcript.md",
+      "all_of_any": [
+        [
+          "Project context:",
+          "项目上下文摘要"
+        ],
+        [
+          "Suggested lane",
+          "建议车道"
+        ]
+      ]
+    },
+    {
+      "id": "does_not_ask_permission_to_invoke_subskill",
+      "description": "Does not ask whether to invoke the routed PM skill or require a manual sub-skill command",
+      "target": "with_skill/outputs/transcript.md",
+      "none_of": [
+        "是否需要我帮你唤起",
+        "可以直接运行 /pm-agent:idea-to-spec",
+        "如果你的环境已安装该技能",
+        "should I invoke",
+        "run /pm-agent:idea-to-spec"
+      ]
+    },
+    {
+      "id": "continues_with_requirement_shaping",
+      "description": "Continues into requirement shaping questions or structured PM next steps in the same response",
+      "target": "with_skill/outputs/transcript.md",
+      "any_of": [
+        "目标用户",
+        "核心场景",
+        "价值主张",
+        "平台形态",
+        "一次确认一个决策点"
+      ]
+    }
+  ]
+}
