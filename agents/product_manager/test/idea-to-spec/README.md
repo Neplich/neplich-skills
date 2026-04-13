@@ -13,6 +13,7 @@
 - 使用 `docs/pm/{feature-name}/DECISIONS.md` 作为持久记忆源
 - 对已收敛 section 进行增量落档
 - 在阶段结束后执行文档收束
+- 在空工作区的新产品请求里保持 PM-first，而不是直接进入工程脚手架
 
 ## 目录结构
 
@@ -24,10 +25,12 @@ agents/product_manager/test/idea-to-spec/
 ├─ evals/
 │  └─ evals.json
 └─ workspace/
-   └─ iteration-1/
-      ├─ eval-1-existing-project-feature/
-      ├─ eval-2-existing-project-update/
-      └─ eval-3-greenfield-discovery/
+   ├─ iteration-1/
+   │  ├─ eval-1-existing-project-feature/
+   │  ├─ eval-2-existing-project-update/
+   │  └─ eval-3-greenfield-discovery/
+   └─ iteration-2/
+      └─ eval-4-greenfield-bootstrap-routing/
 ```
 
 每个 eval workspace 建议包含：

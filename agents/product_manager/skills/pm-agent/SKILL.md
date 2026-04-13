@@ -1,6 +1,6 @@
 ---
 name: pm-agent
-description: Route PM work to the right downstream skill. Use when the user needs product discovery, idea shaping, requirement clarification, scope definition, spec creation or updates, competitor research, release communication, roadmap planning, changelog generation, or GitHub project status. Trigger on phrases like "做个 PRD", "梳理需求", "定义范围", "已有 spec 要改", "竞品分析", "battlecard", "生成 changelog", "写发版说明", "做路线图", "项目状态", "milestone 进度", "有哪些 PR 卡住了", or any PM-level request that should be routed before execution."
+description: Route PM work to the right downstream skill. Use when the user needs product discovery, idea shaping, requirement clarification, scope definition, spec creation or updates, competitor research, release communication, roadmap planning, changelog generation, GitHub project status, or is describing a new app or feature in an empty or new repo before engineering should start. Trigger on phrases like "我想做一个...", "做个 AI 助手", "先做 PRD", "先梳理需求", "定义范围", "空目录里做个...", "已有 spec 要改", "竞品分析", "battlecard", "生成 changelog", "写发版说明", "做路线图", "项目状态", "milestone 进度", "有哪些 PR 卡住了", or any PM-level request that should be routed before execution."
 ---
 
 # PM Agent Dispatcher
@@ -15,6 +15,8 @@ when the broader outcome clearly spans multiple PM capabilities.
 
 - identifying the primary PM outcome the user wants
 - selecting the narrowest PM skill that owns that outcome
+- intercepting empty-workspace or new-repo product requests before they jump
+  straight into engineering bootstrap
 - sequencing multiple PM skills when the request clearly spans discovery,
   status, planning, and release communication
 - asking at most one route-level clarification question when the target outcome
@@ -28,6 +30,8 @@ when the broader outcome clearly spans multiple PM capabilities.
   `release-notes-generator`, `roadmap-generator`, or `github-reader`
 - continuing into design implementation, engineering execution, QA, DevOps, or
   security work
+- letting empty-workspace product ideas skip PM discovery and go straight to
+  code scaffolding unless the user explicitly asks to bypass PM
 
 ## Available Skills
 
@@ -44,7 +48,8 @@ when the broader outcome clearly spans multiple PM capabilities.
 Route by the user's intended PM outcome, not by literal wording.
 
 - Product discovery, feature framing, scope convergence, requirement shaping,
-  spec creation, spec updates, "把想法变成文档", "收敛需求", "定义边界"
+  spec creation, spec updates, empty/new repo app ideas, "把想法变成文档",
+  "收敛需求", "定义边界", "空目录里做个产品", "先别写代码先做 PRD"
   -> `idea-to-spec`
 - Competitor research, positioning comparison, market scan, messaging gaps,
   "竞品分析", "我们和 X 怎么比"
@@ -68,7 +73,7 @@ Route by the user's intended PM outcome, not by literal wording.
 
 | PM Outcome | Primary Skill |
 | --- | --- |
-| 新想法、新功能、范围收敛、已有 spec 更新 | `idea-to-spec` |
+| 新想法、新功能、空/新仓库里的产品想法、范围收敛、已有 spec 更新 | `idea-to-spec` |
 | 竞品分析、定位比较、市场情报 | `competitive-brief` |
 | 销售 battlecard、deal support | `competitive-intelligence` |
 | changelog、版本差异、未发布改动 | `changelog-generator` |
@@ -83,6 +88,17 @@ If the request is PM-shaped but underspecified, use these defaults:
 - if it is about communicating shipped work -> choose
   `changelog-generator` for developer-facing output and
   `release-notes-generator` for user-facing output
+
+## PM-First Guardrail
+
+- If the workspace is empty or near-empty and the user is mainly describing
+  product behavior, layout, flows, users, scope, or documents, route to
+  `idea-to-spec` first.
+- Mentions of pages, panels, left-right layout, chat UI, or rough interaction
+  ideas do not by themselves make the request engineering work.
+- Only point the next step to `engineer-agent` after PM requirements are stable
+  enough for implementation, or when the user explicitly says to skip PM and
+  scaffold code immediately.
 
 ## Common Multi-Skill Chains
 
@@ -104,8 +120,10 @@ explicitly requested or strongly implied by the user's end goal.
   the PM skill that owns the final output; it may pull GitHub context itself.
 - If the user is actually asking for UI/UX deliverables, stop PM routing at the
   PM handoff and point the next step to `designer-agent`.
-- If the user is asking to build or modify software, finish the PM routing and
-  point the next step to `engineer-agent`.
+- If the user is asking to build or modify software but the workspace is still
+  empty/new and the product definition is unsettled, keep the request on the PM
+  path first. Point the next step to `engineer-agent` only after PM scope is
+  stable or the user explicitly opts out of PM.
 
 ## Output Behavior
 

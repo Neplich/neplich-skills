@@ -1,6 +1,6 @@
 ---
 name: idea-to-spec
-description: "Use this when the user wants to turn a product idea, an existing-project feature request, or a spec change into structured product or technical design output."
+description: "Use this when the user wants to turn a product idea, an empty-workspace app request, an existing-project feature request, or a spec change into structured PM or technical design output before implementation."
 ---
 
 # Idea to Spec
@@ -43,6 +43,9 @@ For feature design and spec-change requests, follow these rules:
    assumptions.
 9. Do not regenerate existing documents by habit. Prefer delta-oriented
    iteration.
+10. In empty or near-empty workspaces, do not jump to engineering bootstrap,
+    framework selection, or scaffolding unless the user explicitly says to skip
+    PM and start coding now.
 
 ## Operating Modes
 
@@ -85,6 +88,8 @@ you converse.
 ## When to Use
 
 - The user has an idea and wants a concrete plan or spec
+- The workspace is empty or near-empty and the user is describing what the
+  product should do before any stack has been settled
 - The user needs a PRD, design doc, tech spec, or delivery plan
 - The user wants to add a feature to an existing codebase and needs the plan
   anchored in current repo reality
@@ -97,6 +102,8 @@ Do not use this for:
 
 - pure code review or debugging
 - implementation-only requests where the spec is already settled
+- stack-only bootstrap requests where the user explicitly wants to skip PM
+  discovery and scaffold code now
 - trivial bug fixes that do not require product or architecture framing
 
 ## Internal Routing Contract
@@ -130,6 +137,8 @@ Load only the narrowest internal `INSTRUCTIONS.md` needed for the next step.
   current system, not just the target end state.
 - **Progressive disclosure**: Offer one recommended next step plus one optional
   alternative by default.
+- **PM before bootstrap**: Empty-workspace product requests stay in PM lanes
+  first, even if the user's wording sounds implementation-oriented.
 - **Reuse settled context**: Downstream internal instruction resources should
   inherit confirmed facts instead of re-asking the basics.
 - **Document as memory**: Use feature docs as durable working memory for large
@@ -212,6 +221,9 @@ Apply these rules immediately after the context summary:
   `greenfield-bootstrap` and load `project-init`.
 - If the workspace is empty and the user only wants concept validation, stay in
   `greenfield-discovery`.
+- If the workspace is empty or near-empty and the user is describing product
+  behavior, layout, roles, or scope, keep the work in `greenfield-discovery` or
+  `greenfield-bootstrap`. Do not suggest engineering bootstrap from Phase 0.
 - If an existing repo is present and the user is adding a feature or module,
   choose `existing-project-feature`.
 - If the repo and formal docs already exist and the user is changing approved

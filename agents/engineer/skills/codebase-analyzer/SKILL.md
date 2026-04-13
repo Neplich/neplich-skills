@@ -173,7 +173,7 @@ project_profile:
 
 ## Edge Cases
 
-- **Empty project**: If the directory only has `.git` and maybe a README, report `status: empty` and recommend using `project-bootstrap` instead.
+- **Empty project**: If the directory only has `.git` and maybe a README, report `status: empty`. Recommend `pm-agent:idea-to-spec` when the user is still defining the product, and recommend `project-bootstrap` only when a TRD or approved PM docs already exist.
 - **Monorepo**: Profile the root workspace config plus each package/app that seems relevant to the user's task. Ask which sub-project to focus on if unclear.
 - **Multiple languages**: List all detected languages; identify the primary one by code volume. Note secondary languages (e.g., "Python backend + TypeScript frontend").
 - **No CI**: Note the absence and flag as a gap.

@@ -28,7 +28,7 @@ decision, before deciding which internal instruction resource to load.
 
 | Situation | Lane | Default next action |
 | --- | --- | --- |
-| Empty workspace, vague concept, or early idea validation | `greenfield-discovery` | Stay in `idea-to-spec` |
+| Empty workspace, vague concept, early idea validation, or new-repo product request with unsettled scope | `greenfield-discovery` | Stay in `idea-to-spec` |
 | Empty workspace and the user wants durable docs now | `greenfield-bootstrap` | Load `project-init` |
 | Existing repo, adding a new feature or module | `existing-project-feature` | Stay in `idea-to-spec` until requirements or architecture stabilize |
 | Existing repo, changing approved behavior / scope / rollout | `existing-project-update` | Load `change-impactor`, then route to iteration |
@@ -61,6 +61,8 @@ These rules apply before any internal routing:
   - architecture direction
 - For existing-project requests, inspect repo structure and current docs before
   recommending generation or iteration.
+- For empty or near-empty workspaces, keep product ideas on the PM path first
+  even when the user's verbs sound like "build", "create", or "init".
 - For change requests against approved docs, prefer impact analysis and direct
   iteration over regeneration.
 - Show the full pipeline only when the user explicitly asks for end-to-end

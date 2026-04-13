@@ -20,6 +20,26 @@
           "text": "build、lint、test 命令都能成功运行"
         }
       ]
+    },
+    {
+      "id": 2,
+      "name": "defer-bootstrap-without-spec",
+      "prompt": "这是一个空目录。我想做一个 AI 对话助手，左侧是会话列表，右侧是聊天区。",
+      "expected_output": "识别到缺少 TRD 或已确认 spec；不要直接脚手架；要求先补 PM/idea-to-spec 文档收敛，或仅在用户明确要求跳过 PM 时才继续 bootstrap。",
+      "assertions": [
+        {
+          "name": "缺少规格时不应直接初始化",
+          "text": "明确说明当前缺少 TRD、PRD 或其他已确认需求，不能默认直接开始 scaffold"
+        },
+        {
+          "name": "回指 PM 路径",
+          "text": "将需求收敛和文档化回指到 pm-agent 或 idea-to-spec，而不是立刻选择框架并运行初始化命令"
+        },
+        {
+          "name": "保留显式 override 例外",
+          "text": "只有在用户明确说跳过 PM、直接搭骨架时，才允许继续 bootstrap"
+        }
+      ]
     }
   ]
 }
