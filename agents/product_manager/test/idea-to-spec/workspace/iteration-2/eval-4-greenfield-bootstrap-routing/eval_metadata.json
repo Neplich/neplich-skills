@@ -27,8 +27,11 @@
         [
           "Status: `empty`",
           "Status: empty",
+          "Status: near-empty / greenfield",
           "empty workspace",
-          "空目录 / Greenfield"
+          "空目录 / Greenfield",
+          "目录状态：基本为空",
+          "基本为空（仅包含评估元数据）"
         ],
         [
           "Existing docs",
