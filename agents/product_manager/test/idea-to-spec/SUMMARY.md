@@ -9,7 +9,7 @@
 | Eval 1 | Existing project feature | Reviewed + Auto-checked | Skill 协议有效；eval 已允许 `design.md` 作为阶段性产物 | 可继续增强 transcript 结构检查 |
 | Eval 2 | Existing project update | Reviewed + Auto-checked | Skill update lane 有效；自动断言已覆盖 decision history 更新 | 可继续增强 blast-radius 细粒度检查 |
 | Eval 3 | Greenfield discovery | Reviewed + Auto-checked | Skill discovery mode 有效；自动断言已覆盖确认 checkpoint | 可继续增强“延后文档化”的文本信号检查 |
-| Eval 4 | Empty-workspace PM-first bootstrap routing | Defined | 覆盖空目录下的产品请求，防止直接掉到工程脚手架 | 需要补 with/without transcript 对照运行 |
+| Eval 4 | Empty-workspace PM-first bootstrap routing | Reviewed + Auto-checked | fresh baseline 已可自动生成；断言已放宽到 PM-first discovery/bootstrap lane 语义 | 可继续观察后续 prompt 演化是否仍稳定 |
 
 ## Key Conclusions
 
@@ -17,6 +17,8 @@
 - 目前暴露的问题主要在 eval 定义精度，而不是主 prompt 方向
 - Eval 1 / 2 / 3 当前都已有基础机器断言覆盖，不再只依赖文件存在性检查
 - Eval 4 新增了空工作区 PM-first 守门场景，用于回归“不要直接初始化项目”
+- `run_eval.py` 现在会先生成 fresh transcript，再执行断言；baseline 仍然是硬性必需产物
+- 最新一次真实回归里，Eval 4 的 with-skill / without-skill transcript 都已成功生成，并且机器断言已全部通过
 - `idea-to-spec` 的新协议已经形成可回归的最小基线：
   - context summary
   - 单决策点推进

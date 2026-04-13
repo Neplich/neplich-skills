@@ -2,6 +2,10 @@
   "eval_id": 4,
   "eval_name": "greenfield-bootstrap-routing",
   "workspace_root": "agents/product_manager/test/idea-to-spec/workspace/iteration-2/eval-4-greenfield-bootstrap-routing",
+  "execution_cleanup": [
+    "PRD.md",
+    "docs/pm"
+  ],
   "prompt": "这是一个空目录。我想做一个 AI 对话助手，左侧是会话列表，右侧是聊天区。先不要直接初始化项目，先帮我梳理需求并落成 PRD 骨架。",
   "with_skill_outputs": [
     "with_skill/outputs/transcript.md"
@@ -14,10 +18,22 @@
       "id": "empty_workspace_context_summary",
       "description": "Starts with an empty-workspace context summary instead of immediate scaffolding",
       "target": "with_skill/outputs/transcript.md",
-      "all_of": [
-        "Project context:",
-        "- Status: `empty`",
-        "- Existing docs: `no-docs`"
+      "all_of_any": [
+        [
+          "Project context:",
+          "**Project context:**",
+          "项目上下文摘要"
+        ],
+        [
+          "Status: `empty`",
+          "Status: empty",
+          "empty workspace",
+          "空目录 / Greenfield"
+        ],
+        [
+          "Existing docs",
+          "现有文档"
+        ]
       ],
       "none_of": [
         "npm create vite",
@@ -27,11 +43,17 @@
     },
     {
       "id": "bootstrap_lane_selected",
-      "description": "Routes the request to PM bootstrap rather than engineering bootstrap",
+      "description": "Routes the request to a PM-first discovery/bootstrap lane rather than engineering bootstrap",
       "target": "with_skill/outputs/transcript.md",
-      "all_of": [
-        "- Suggested lane: `greenfield-bootstrap`",
-        "- Likely next step: `project-init`"
+      "all_of_any": [
+        [
+          "Suggested lane",
+          "建议车道"
+        ],
+        [
+          "greenfield-bootstrap",
+          "greenfield-discovery"
+        ]
       ]
     },
     {

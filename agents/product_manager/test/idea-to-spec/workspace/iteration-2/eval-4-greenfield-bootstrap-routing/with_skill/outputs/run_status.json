@@ -1,0 +1,21 @@
+{
+  "command": [
+    "claude",
+    "-p",
+    "--no-session-persistence",
+    "--permission-mode",
+    "bypassPermissions",
+    "--output-format",
+    "json",
+    "--plugin-dir",
+    "/Users/neplich/dev/neplich-skills/agents/product_manager",
+    "/idea-to-spec 这是一个空目录。我想做一个 AI 对话助手，左侧是会话列表，右侧是聊天区。先不要直接初始化项目，先帮我梳理需求并落成 PRD 骨架。"
+  ],
+  "cwd": "/var/folders/4g/9m0612cn1811btk7081t7ych0000gn/T/idea-to-spec-eval-f7vnb5ay/workspace",
+  "timeout": false,
+  "returncode": 0,
+  "stdout_length": 1740,
+  "stderr": "",
+  "duration_ms": 22369,
+  "result_length": 795
+}

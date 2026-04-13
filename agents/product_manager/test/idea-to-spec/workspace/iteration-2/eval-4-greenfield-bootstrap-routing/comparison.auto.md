@@ -7,7 +7,7 @@
 ## Expected Assertions
 
 - `empty_workspace_context_summary`: Starts with an empty-workspace context summary instead of immediate scaffolding
-- `bootstrap_lane_selected`: Routes the request to PM bootstrap rather than engineering bootstrap
+- `bootstrap_lane_selected`: Routes the request to a PM-first discovery/bootstrap lane rather than engineering bootstrap
 - `pm_docs_named`: Names PM document artifacts as the immediate next step
 
 ## Output Presence Check
@@ -18,13 +18,13 @@
 
 ### Without Skill
 
-- [FAIL] `without_skill/outputs/transcript.md`
+- [PASS] `without_skill/outputs/transcript.md`
 
 ## Assertion Checks
 
 - [PASS] `empty_workspace_context_summary`: Starts with an empty-workspace context summary instead of immediate scaffolding
   - All checks passed
-- [PASS] `bootstrap_lane_selected`: Routes the request to PM bootstrap rather than engineering bootstrap
+- [PASS] `bootstrap_lane_selected`: Routes the request to a PM-first discovery/bootstrap lane rather than engineering bootstrap
   - All checks passed
 - [PASS] `pm_docs_named`: Names PM document artifacts as the immediate next step
   - All checks passed

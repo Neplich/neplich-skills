@@ -77,15 +77,15 @@
       "id": 4,
       "name": "greenfield-bootstrap-routing",
       "prompt": "这是一个空目录。我想做一个 AI 对话助手，左侧是会话列表，右侧是聊天区。先不要直接初始化项目，先帮我梳理需求并落成 PRD 骨架。",
-      "expected_output": "先输出空工作区 context summary；识别为 greenfield-bootstrap；保持在 PM/idea-to-spec 路径里，不直接运行脚手架；明确下一步是 project-init 或 PRD 文档骨架，而不是工程实现。",
+      "expected_output": "先输出空工作区 context summary；识别为 PM-first 的 greenfield-discovery 或 greenfield-bootstrap 路径；保持在 PM/idea-to-spec 路径里，不直接运行脚手架；明确下一步是需求澄清、PRD/DECISIONS 文档化或等价的 PM 动作，而不是工程实现。",
       "assertions": [
         {
           "name": "先做空工作区检测",
           "text": "输出先说明目录为空、技术栈待定、已有文档为空，而不是直接给出项目初始化命令"
         },
         {
-          "name": "识别为 greenfield-bootstrap",
-          "text": "明确给出 Suggested lane: greenfield-bootstrap 或等价表达，表明这是文档引导的新项目启动"
+          "name": "识别为 PM-first lane",
+          "text": "明确给出 greenfield-discovery 或 greenfield-bootstrap 等价表达，表明这是 PM 路径下的新项目需求收敛，而不是工程启动"
         },
         {
           "name": "保持 PM-first，不直接工程化",

@@ -1,28 +1,27 @@
-Project context:
-- Directory: `/Users/neplich/dev/neplich-skills/agents/product_manager/test/idea-to-spec/workspace/iteration-2/eval-4-greenfield-bootstrap-routing`
-- Status: `empty`
-- Tech stack: `TBD`
-- Existing docs: `no-docs`
-- Suggested lane: `greenfield-bootstrap`
-- Likely next step: `project-init` (after we stabilize requirements)
-- Request shape: greenfield idea, user wants durable PM docs before any engineering bootstrap
+好的，我们先来完成需求梳理和 PRD 骨架。
 
-明白了，我们先不碰代码脚手架，把需求先聊清楚，再落成 PRD 骨架。
+**Project context:**
+- Directory: `/private/var/folders/4g/9m0612cn1811btk7081t7ych0000gn/T/idea-to-spec-eval-f7vnb5ay-workspace`
+- Status: empty
+- Tech stack: TBD
+- Existing docs: none
+- Suggested lane: greenfield-bootstrap
+- Likely next step: 在 `idea-to-spec` 内完成需求澄清，逐步产出 PRD 骨架
 
-为了把“AI 对话助手”的 PRD 写准确，我需要先确认几个根本性的产品决策。先从最核心的用户与场景开始：
+---
 
-**决策点 1：目标用户与核心场景**
+下面进入 **Phase 1：澄清 What & Why**。为了把 PRD 写得扎实，我需要分几个决策点来确认。先从最核心的定位开始：
 
-我整理了 3 个最典型的高频方向，请选一个（或告诉我你的变体）：
+**Q1：产品定位与目标用户**
+基于你的描述，我的初步理解是：
 
-| 选项 | 目标用户 | 核心场景 | 关键差异 |
-|---|---|---|---|
-| A. 个人效率助手 | 普通用户 / 知识工作者 | 日常问答、写作辅助、头脑风暴 | 强调轻量、快速、多设备同步 |
-| B. 开发者/专业工具 | 程序员、设计师、分析师 | 代码调试、Prompt 迭代、多模型对比 | 强调多模型切换、Markdown/代码渲染、API Key 自定义 |
-| C. 企业/团队内部助手 | 企业员工、客服 | 对接内部知识库、权限隔离、审计 | 强调权限管理、数据安全、审计日志 |
+> 一个面向个人用户或小型团队的 Web 端 AI 对话助手，采用经典的"左列表、右聊天"布局。核心价值是提供简洁、低门槛的多轮对话体验。
 
-**我的默认推荐：B（开发者/专业工具）**，因为“左侧会话列表 + 右侧聊天区”是最接近 ChatGPT/Claude 这类专业对话产品的形态， MVP 上下文最清晰，也最容易定义可验收的功能边界。
+为了校准方向，请帮我确认或补充以下几点：
 
-请确认：
-1. 你倾向哪个方向？（A / B / C / 其它）
-2. 你打算先做 **Web 应用**、**桌面端（Electron/Tauri）**，还是 **移动端优先**？
+1. **目标用户**：主要是个人日常使用（类似 ChatGPT 网页版），还是面向特定工作场景（如程序员辅助编程、文案创作、企业内部知识问答）？
+2. **使用平台**：优先桌面 Web 端，还是需要兼顾移动端响应式？
+3. **模型来源**：是只对接一个 AI 后端（比如仅 OpenAI / 仅 Claude），还是希望支持多模型切换（用户可自行配置 API Key）？
+4. **数据持久化**：聊天记录是保存在浏览器本地（LocalStorage/IndexedDB），还是需要后端持久化+账号体系？
+
+请先回答这几个问题，确认后我们再继续推进功能范围和非目标。
