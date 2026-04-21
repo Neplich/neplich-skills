@@ -7,6 +7,22 @@ description: "Discovery-driven exploratory QA that uses an exploration charter t
 
 Use this skill to discover defects through guided exploration, not to generate random UI actions. The exploration strategy is chosen only after reading the product context, implementation changes, and environment instructions. The output is an exploratory QA report plus, when warranted, a defect-ready escalation path.
 
+## Shared QA Directory Contract
+
+For feature-scoped QA, use `docs/qa/<feature-name>/` as durable QA memory:
+
+- `TEST_SPEC.md` is the suite index and coverage summary.
+- `test-cases/` stores reusable test cases.
+- Every E2E test case produced or expanded by exploration must be written as
+  one Markdown file: `test-cases/TC-NNN-<short-slug>.md`.
+- `FILE_EXPLORATION.md` records source files, config files, routes, test
+  harnesses, fixtures, and environment notes inspected to derive coverage.
+- `reports/` stores exploratory reports when no stronger repo convention
+  exists.
+
+Exploration should supplement this directory instead of re-reading the entire
+project on every standalone QA run.
+
 ## When to Use
 
 - After implementation changes when you need discovery beyond scripted coverage
@@ -24,12 +40,25 @@ Use this skill to discover defects through guided exploration, not to generate r
 
 Before any testing action, gather the context needed to choose an exploration charter:
 
-1. Read the PM or release context for the feature, scope, and intended user value.
-2. Read implementation notes, changed files, or the equivalent change summary to identify the exact surface that moved.
-3. Read known bugs, risk notes, and prior QA reports so exploration can target realistic failure modes.
-4. Read environment instructions that affect how the app should be exercised, including setup, auth, feature flags, test accounts, or required services.
+1. Read existing QA memory first when available:
+   `docs/qa/<feature-name>/TEST_SPEC.md`,
+   `docs/qa/<feature-name>/test-cases/*.md`,
+   `docs/qa/<feature-name>/FILE_EXPLORATION.md`, and relevant reports.
+2. Read the PM or release context for the feature, scope, and intended user
+   value.
+3. Read implementation notes, changed files, or the equivalent change summary
+   to identify the exact surface that moved.
+4. Read known bugs, risk notes, and prior QA reports so exploration can target
+   realistic failure modes.
+5. Read environment instructions that affect how the app should be exercised,
+   including setup, auth, feature flags, test accounts, or required services.
 
 If any of the above is missing, note the gap and make the smallest safe assumption needed to continue.
+
+For standalone exploratory or E2E requests with no PM-authored test cases, ask
+the user whether there are new feature updates and whether project-file
+exploration should be used to expand test cases. If they decline exploration,
+use existing QA memory and execute only the scoped charter.
 
 ## Exploration Charter
 
@@ -78,7 +107,13 @@ Prefer the least brittle method that still produces clear evidence.
 2. Execute the smoke path over the changed surface.
 3. Probe the prioritized edge cases from the charter.
 4. Branch into nearby risk exploration only when the observed behavior justifies it.
-5. Track what was covered, what was intentionally skipped, and what still needs follow-up.
+5. If exploration reads source or config files to derive coverage, write or
+   update `docs/qa/<feature-name>/FILE_EXPLORATION.md` with the files read,
+   why they were read, and coverage implications.
+6. If exploration identifies reusable E2E scenarios, write or update one case
+   file per scenario under `docs/qa/<feature-name>/test-cases/`.
+7. Track what was covered, what was intentionally skipped, and what still needs
+   follow-up.
 
 During exploration, capture:
 
@@ -105,7 +140,10 @@ Keep unconfirmed anomalies in the exploratory report. Do not promote them as def
 
 ## Evidence Output
 
-Write the exploratory report to `docs/qa-reports/YYYY-MM-DD-<feature>-exploratory-report.md`.
+Write the exploratory report to
+`docs/qa/<feature-name>/reports/YYYY-MM-DD-exploratory-report.md` when the
+feature QA directory is known. Otherwise use the fallback path
+`docs/qa-reports/YYYY-MM-DD-<feature>-exploratory-report.md`.
 
 The report must be concise, handoff-ready, and clearly separate these sections:
 
@@ -116,6 +154,10 @@ The report must be concise, handoff-ready, and clearly separate these sections:
 - Recommended next actions: follow-up QA, engineering checks, or escalation candidates
 
 The report should also record the charter, timebox, and the evidence used to reach conclusions.
+
+When new E2E case files are created or changed, list those paths in the report
+so a later spec-based run can execute from them without repeating the same file
+exploration.
 
 ## Out of Scope
 

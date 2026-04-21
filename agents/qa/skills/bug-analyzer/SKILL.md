@@ -7,6 +7,23 @@ description: "Analyze failing scenarios with an evidence-first intake, classify 
 
 Turn a failing scenario into a defect artifact only when the evidence crosses a useful threshold. This skill is about judging defect quality, not filling a template.
 
+## Shared QA Directory Contract
+
+For feature-scoped QA artifacts, prefer `docs/qa/<feature-name>/` when it
+exists:
+
+- `test-cases/` stores reusable cases; every E2E case must be one Markdown file
+  named `TC-NNN-<short-slug>.md`.
+- `FILE_EXPLORATION.md` records file exploration used to derive or expand
+  reusable coverage.
+- `reports/` stores bug analysis artifacts when no stronger repo convention
+  exists.
+
+Bug analysis does not create broad test plans, but when a confirmed E2E
+reproduction should become reusable regression coverage, write or update one
+case file under `docs/qa/<feature-name>/test-cases/` and reference it from the
+defect artifact.
+
 ## When to Use
 
 - A test, manual check, or exploratory pass fails and needs triage
@@ -68,6 +85,8 @@ Keep reproduction steps grounded in the observed evidence. If the failure is not
 Pick the durable output that matches the repo workflow and the user request.
 
 - Use a local Markdown artifact when the work is being tracked in-repo, when the repo does not require GitHub workflow, or when the user asked for a file-based handoff
+- Prefer `docs/qa/<feature-name>/reports/YYYY-MM-DD-bug-<short-slug>.md` when
+  a feature QA directory is known
 - Use a GitHub issue only when the repository workflow explicitly wants issue tracking or the user requested an issue
 
 Do not assume GitHub issue creation is the primary output. Do not mutate code, commit changes, or invent a delivery workflow as part of this skill.
@@ -116,6 +135,14 @@ Suggested content structure:
 
 ## Impact
 [implementation or release impact]
+```
+
+If the report adds a reusable E2E regression case, include:
+
+```markdown
+## Reusable Test Case
+- Test case file: docs/qa/<feature-name>/test-cases/TC-NNN-<short-slug>.md
+- Purpose: [why this case should be rerun]
 ```
 
 ### GitHub issue

@@ -7,6 +7,22 @@ description: "Verify fixes with evidence reuse, adjacent-risk review, and clear 
 
 Verify that a fix actually resolves the original failure and that nearby surfaces still behave correctly. This skill is about fix verification plus adjacent risk review, not replaying one bug in isolation.
 
+## Shared QA Directory Contract
+
+For feature-scoped regression work, prefer `docs/qa/<feature-name>/` as durable
+QA memory:
+
+- `TEST_SPEC.md` is the suite index and traceability summary.
+- `test-cases/` stores reusable cases; every E2E case must be one Markdown file
+  named `TC-NNN-<short-slug>.md`.
+- `FILE_EXPLORATION.md` records file exploration used to derive or expand
+  regression scope.
+- `reports/` stores regression verification reports when no stronger repo
+  convention exists.
+
+Use these files to avoid rediscovering the full project on every regression
+run.
+
 ## When to Use
 
 - After a fix, patch, or hotfix is available for QA verification
@@ -21,11 +37,21 @@ Reuse the original evidence instead of re-deriving the scope from scratch. The r
 
 Read the evidence before executing anything:
 
+- Existing QA test cases and prior file exploration:
+  `docs/qa/<feature-name>/test-cases/*.md` and
+  `docs/qa/<feature-name>/FILE_EXPLORATION.md`, when available
 - Original bug report or failing test evidence
 - Fix context such as changed files, PR notes, implementation notes, or release notes
 - Related areas likely to regress because they share code, state, data, UI flow, API surface, permissions, or configuration
 
 If the original evidence is missing or too thin, mark the run as `blocked` until the missing material is available.
+
+If the user asks for standalone E2E regression and no PM-authored test cases are
+available, first read `docs/qa/<feature-name>/test-cases/`. Then ask whether
+there are new feature updates and whether QA should explore project files to
+expand regression cases. If exploration is requested, update
+`FILE_EXPLORATION.md` and create or update one E2E case file per reusable
+scenario before execution.
 
 ## Step 2 — Define the verification scope
 
@@ -54,6 +80,8 @@ Run checks that map to the scope:
 - Reproduce the original failure path against the fixed build
 - Verify the expected behavior now succeeds
 - Exercise adjacent or nearby surfaces that could regress
+- Execute existing or newly expanded E2E case files from
+  `docs/qa/<feature-name>/test-cases/` when they map to the fix scope
 
 Capture evidence from runtime output, screenshots, traces, logs, or test output as needed. Keep run status separate from evidence strength: `pass`, `fail`, and `blocked` are the regression run outcomes, while evidence confidence is a secondary note about how strong and complete the supporting proof is.
 
@@ -116,6 +144,8 @@ If the original failure still reproduces, report `fail` and name the evidence. I
 Use a durable output path that matches repo context.
 
 - Use a local Markdown artifact when the repo tracks QA verification in files or when the user asked for a document
+- Prefer `docs/qa/<feature-name>/reports/YYYY-MM-DD-regression-verification.md`
+  when a feature QA directory is known
 - Use a GitHub issue only when the repo workflow or user request explicitly wants issue tracking
 
 Do not commit changes, do not mutate code, and do not assume a GitHub-first workflow.

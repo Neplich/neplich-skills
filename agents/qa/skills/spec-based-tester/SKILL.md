@@ -9,11 +9,32 @@ Validate documented requirements against the implementation using the best avail
 
 This is a QA validation protocol, not a router and not a generic execution script. It stays within QA boundaries: read the spec and implementation context, choose an execution path, collect evidence, and report confirmed results, blocked items, and handoff risks.
 
+## Shared QA Directory Contract
+
+For feature-scoped QA, use `docs/qa/<feature-name>/` as the durable source of
+truth when it exists.
+
+- `TEST_SPEC.md` is the suite index and traceability summary.
+- `test-cases/` stores reusable test cases.
+- Every E2E test case must be stored as exactly one Markdown file:
+  `test-cases/TC-NNN-<short-slug>.md`.
+- `FILE_EXPLORATION.md` records project file exploration used to derive or
+  expand test cases.
+- `reports/` stores execution reports when the repo does not already define a
+  stronger reporting path.
+
+If a PM PRD / TRD / Test Spec is absent or does not include concrete E2E test
+cases, do not rediscover the whole project by default. First use the QA
+directory as persistent memory.
+
 ## Top-Level Contract
 
 Before running anything, gather repository evidence and confirm what is in scope.
 
 - Read the PM/spec documents that define the expected behavior.
+- Read `docs/qa/<feature-name>/TEST_SPEC.md` and
+  `docs/qa/<feature-name>/test-cases/*.md` before exploring source files when a
+  feature QA directory exists.
 - Read implementation context for the changed area, including changed files, engineer notes, release notes, or handoff notes if they exist.
 - Read existing repository instructions for how tests are normally run in this project.
 - Prefer the repo’s documented acceptance, e2e, integration, or manual QA harness over inventing a new runner.
@@ -26,10 +47,35 @@ Before running anything, gather repository evidence and confirm what is in scope
 
 Complete preflight before any execution step.
 
+### 0) Standalone E2E memory check
+
+When the user asks for E2E, acceptance, or spec-based QA without supplying PM
+test cases:
+
+1. Identify the feature name from the user request, existing PM docs, branch,
+   changed files, or nearby QA docs. If it cannot be inferred, ask one concise
+   question for the feature name or target flow.
+2. Read the agreed QA directory:
+   - `docs/qa/<feature-name>/TEST_SPEC.md`
+   - `docs/qa/<feature-name>/test-cases/*.md`
+   - `docs/qa/<feature-name>/FILE_EXPLORATION.md`, if present
+   - prior `docs/qa/<feature-name>/reports/*.md`, if relevant
+3. If reusable test cases exist, treat them as the primary execution scope.
+4. Before reading broad source areas, ask the user whether there are new
+   feature updates and whether they want QA to explore project files to expand
+   the test cases.
+5. If the user says no, execute only the existing cases unless they are
+   blocked.
+6. If the user says yes, perform targeted file exploration, update
+   `FILE_EXPLORATION.md`, and write newly discovered E2E cases under
+   `test-cases/` as one file per case before execution.
+
 ### 1) Gather scope sources
 
 Read whatever is available from the following sources, in this order of usefulness:
 
+- Existing QA test cases in `docs/qa/<feature-name>/test-cases/*.md`
+- Existing QA `TEST_SPEC.md` and `FILE_EXPLORATION.md`
 - Test Spec or equivalent QA acceptance doc
 - PRD or product spec
 - TRD or technical design doc
@@ -45,7 +91,8 @@ If a source does not exist, note it as absent rather than inventing a substitute
 Before execution starts, capture:
 
 - What is being validated
-- Which requirement IDs, acceptance points, or checklist items are in scope
+- Which test case files, requirement IDs, acceptance points, or checklist items
+  are in scope
 - Which implementation areas are affected
 - Which environment assumptions are confirmed
 - Which assumptions are still unknown
@@ -92,6 +139,8 @@ Do not install browser tooling globally. If dependencies or browsers are missing
 
 Execute only the tests that are justified by the preflight scope.
 
+- For E2E validation, execute from the individual case files in
+  `docs/qa/<feature-name>/test-cases/` whenever they exist.
 - Prefer targeted validation for the changed files and scoped requirements.
 - Use environment-specific setup only when the repository documentation calls for it.
 - Capture the exact command or tool path used.
@@ -109,7 +158,11 @@ During execution, distinguish:
 
 Produce a validation artifact that is useful for handoff and traceable back to the spec.
 
-Recommended artifact path:
+Recommended artifact path when a feature QA directory is known:
+
+`docs/qa/<feature-name>/reports/YYYY-MM-DD-spec-validation.md`
+
+Fallback artifact path:
 
 `docs/qa-reports/YYYY-MM-DD-<feature>-spec-validation.md`
 
@@ -127,6 +180,7 @@ The report should include:
 
 For each in-scope requirement or acceptance point, record:
 
+- Test case file, when applicable
 - Requirement ID or acceptance label
 - Status: pass, fail, blocked, or assumed
 - Evidence

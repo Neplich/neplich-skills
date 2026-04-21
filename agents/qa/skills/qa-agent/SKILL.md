@@ -30,6 +30,33 @@ or fix verification.
 - expanding requested verification into broad discovery by default
 - forcing every QA request through a full test battery
 
+## Shared QA Document Contract
+
+When QA work is feature-scoped, use `docs/qa/<feature-name>/` as the durable
+QA directory before falling back to ad hoc report paths.
+
+- `TEST_SPEC.md` is the suite index, coverage summary, and traceability record.
+- `test-cases/` stores reusable executable or manual test cases.
+- Each E2E test case must live in its own Markdown file:
+  `test-cases/TC-NNN-<short-slug>.md`.
+- `FILE_EXPLORATION.md` records project file exploration used to derive or
+  expand test cases.
+- `reports/` may store execution reports for validation, exploratory, bug, or
+  regression runs.
+
+For standalone QA or E2E requests where PM has not supplied PRD / TRD / Test
+Spec cases, route the downstream skill with this required sequence:
+
+1. Read `docs/qa/<feature-name>/TEST_SPEC.md` and
+   `docs/qa/<feature-name>/test-cases/*.md` first.
+2. Ask the user whether there are new feature changes and whether QA should
+   explore the project files to expand test cases.
+3. If the user requests exploration, keep file discovery targeted, write or
+   update `FILE_EXPLORATION.md`, and add any new E2E coverage as one file per
+   test case under `test-cases/`.
+4. Execute from the existing and newly added test case files, rather than
+   rediscovering the full project on every run.
+
 ## Available Skills
 
 - `qa-agent:exploratory-tester` - Exploratory, smoke, and edge-case UI testing
