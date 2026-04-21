@@ -5,23 +5,47 @@
       "id": 1,
       "name": "verify-bug-fix",
       "prompt": "验证 Bug #001 的修复，执行回归测试",
-      "expected_output": "回归测试报告，确认修复有效且无新回归问题",
+      "expected_output": "回归验证报告，明确 original failure recheck、fixed behavior、adjacent regression checks 和 release recommendation",
       "assertions": [
         {
-          "name": "读取 Bug 报告",
-          "text": "读取原始 Bug 报告获取复现步骤和预期行为"
+          "name": "证据复用",
+          "text": "先读取原始 bug 报告、失败证据和修复上下文，沿用复现步骤与期望行为来界定回归范围"
         },
         {
-          "name": "验证修复",
-          "text": "按照复现步骤验证 Bug 已被修复"
+          "name": "修复验证",
+          "text": "按原始场景验证修复后行为，并把 original failure、fixed behavior 和 verification result 明确标成 pass、fail 或 blocked"
         },
         {
-          "name": "回归检查",
-          "text": "检查相关功能是否引入新问题"
+          "name": "邻近回归",
+          "text": "检查共享组件、相邻流程和相关状态分支是否出现 adjacent regression，并为每个 surface 记录结果与说明"
         },
         {
-          "name": "生成报告",
-          "text": "输出回归测试报告，包含修复验证结果和回归检查结果"
+          "name": "发布建议",
+          "text": "输出包含 release recommendation 的回归报告，同时区分 run status 和 evidence confidence，避免因为证据薄弱而误判为已就绪"
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "name": "blocked-without-original-bug-context",
+      "prompt": "复测上周修过的支付按钮问题，但仓库里找不到原始 bug 报告、失败证据、修复 PR 或可用测试环境。请给出回归验证结论。",
+      "expected_output": "blocked 回归验证报告，说明缺失上下文、无法复核 original failure、不能给 release ready 结论，并列出恢复验证所需证据",
+      "assertions": [
+        {
+          "name": "原始证据缺失",
+          "text": "必须先指出缺少原始 bug 报告、失败证据、修复上下文或测试环境，不能直接执行泛化回归"
+        },
+        {
+          "name": "blocked 状态",
+          "text": "original failure recheck、fixed behavior 和 adjacent regression checks 必须标记为 blocked 或 not executed，而不是 pass"
+        },
+        {
+          "name": "结构化输出",
+          "text": "输出必须包含 original failure recheck、fixed behavior、adjacent regression checks、release recommendation 和 evidence confidence"
+        },
+        {
+          "name": "发布边界",
+          "text": "release recommendation 必须是 needs more verification 或 blocked，不能因为没有发现失败就建议 release ready"
         }
       ]
     }

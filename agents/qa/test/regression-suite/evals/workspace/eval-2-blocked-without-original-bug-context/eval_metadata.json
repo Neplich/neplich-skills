@@ -1,0 +1,25 @@
+{
+  "eval_id": 2,
+  "eval_name": "blocked-without-original-bug-context",
+  "workspace_root": "agents/qa/test/regression-suite/evals/workspace/eval-2-blocked-without-original-bug-context",
+  "validation_method": "fresh_codex_subagent",
+  "skill_availability_goal": "Verify that regression-suite returns blocked when original bug and fix context are unavailable.",
+  "prompt": "复测上周修过的支付按钮问题，但仓库里找不到原始 bug 报告、失败证据、修复 PR 或可用测试环境。请给出回归验证结论。",
+  "fixture_context": [
+    "notes/missing-context.md"
+  ],
+  "with_skill_outputs": [
+    "with_skill/outputs/subagent-verdict.md"
+  ],
+  "without_skill_outputs": [
+    "without_skill/outputs/subagent-verdict.md"
+  ],
+  "run_diagnostics": [
+    "diagnostics/run.json"
+  ],
+  "execution_cleanup": [
+    "with_skill/outputs",
+    "without_skill/outputs",
+    "diagnostics"
+  ]
+}

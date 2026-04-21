@@ -1,0 +1,27 @@
+{
+  "eval_id": 2,
+  "eval_name": "explore-with-custom-duration",
+  "workspace_root": "agents/qa/test/exploratory-tester/evals/workspace/eval-2-explore-with-custom-duration",
+  "validation_method": "fresh_codex_subagent",
+  "skill_availability_goal": "Verify that exploratory-tester honors user timebox and separates observed issues from unconfirmed signals.",
+  "prompt": "对用户指定的目标应用进行 5 分钟探索测试，按探索章程验证 changed surface、相邻风险和证据分层",
+  "fixture_context": [
+    "docs/pm/settings-panel/PRD.md",
+    "implementation/changed-surface.md",
+    "environment/qa-env.md"
+  ],
+  "with_skill_outputs": [
+    "with_skill/outputs/subagent-verdict.md"
+  ],
+  "without_skill_outputs": [
+    "without_skill/outputs/subagent-verdict.md"
+  ],
+  "run_diagnostics": [
+    "diagnostics/run.json"
+  ],
+  "execution_cleanup": [
+    "with_skill/outputs",
+    "without_skill/outputs",
+    "diagnostics"
+  ]
+}

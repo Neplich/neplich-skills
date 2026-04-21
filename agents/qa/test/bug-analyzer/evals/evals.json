@@ -5,23 +5,51 @@
       "id": 1,
       "name": "analyze-test-failure",
       "prompt": "分析测试失败：登录表单提交后返回 500 错误，生成 Bug 报告",
-      "expected_output": "详细 Bug 报告，包含复现步骤、严重程度、环境信息",
+      "expected_output": "详细 Bug 报告，明确 evidence status、confidence statement 和 severity rationale，并包含 impact framing、复现步骤、环境信息和 evidence references",
       "assertions": [
         {
-          "name": "收集信息",
-          "text": "收集错误消息、堆栈跟踪、截图等失败信息"
+          "name": "证据摄取",
+          "text": "先收集 failing scenario、错误消息、堆栈跟踪、截图、trace、console output、network output 和环境/构建上下文，再进行分类"
         },
         {
-          "name": "判断严重程度",
-          "text": "根据影响范围分配 Critical/High/Medium/Low 严重程度"
+          "name": "分类分离",
+          "text": "使用 confirmed and reproducible、confirmed but environment-sensitive、suspected / needs more evidence 的分类，并把 evidence status 和 confidence 分开记录"
         },
         {
-          "name": "生成报告",
-          "text": "输出包含复现步骤、预期/实际结果、环境信息的完整 Bug 报告"
+          "name": "严重度与置信度",
+          "text": "给出 severity 并附上 rationale，同时明确 confidence statement，避免把严重度和证据强度混为一谈"
         },
         {
-          "name": "输出方式",
-          "text": "自动检测项目类型，选择 Markdown 文件或 GitHub Issue"
+          "name": "持久输出路径",
+          "text": "根据 repo workflow 和用户请求选择 durable output path，优先写入本地 Markdown artifact，只有在明确需要时才创建 GitHub issue"
+        },
+        {
+          "name": "影响说明",
+          "text": "报告要包含 implementation impact 或 release impact，并保留 evidence references 以便后续追踪"
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "name": "thin-evidence-suspected-bug",
+      "prompt": "用户只提供一句反馈：偶尔点击保存后页面好像没反应，没有截图、日志、复现步骤、环境信息或版本号。请分析是否能生成 Bug 报告。",
+      "expected_output": "证据不足的缺陷分析，明确 suspected / needs more evidence、缺失证据、下一步收集计划，并避免创建 confirmed bug",
+      "assertions": [
+        {
+          "name": "薄证据分类",
+          "text": "必须把该问题分类为 suspected / needs more evidence，不能写成 confirmed and reproducible 或 confirmed but environment-sensitive"
+        },
+        {
+          "name": "缺失证据",
+          "text": "必须列出缺失的 failing scenario、复现步骤、环境/版本、console/network output、截图或 trace 等 evidence gaps"
+        },
+        {
+          "name": "结构化输出",
+          "text": "输出必须包含 classification、evidence status、confidence statement、missing evidence、recommended next evidence 这些段落"
+        },
+        {
+          "name": "持久化边界",
+          "text": "不能创建 GitHub issue 或 confirmed bug artifact；只能建议本地调查 note 或待补证据清单"
         }
       ]
     }

@@ -8,36 +8,52 @@
       "expected_output": "测试报告，包含通过/失败统计和失败用例详情",
       "assertions": [
         {
-          "name": "读取规范文档",
-          "text": "读取 test-spec.md、prd.md、trd.md 提取测试场景"
+          "name": "上下文基线",
+          "text": "在执行前读取 test-spec.md、prd.md、trd.md、变更说明和测试命令，先记录范围、环境假设、未知项和被阻塞的检查"
         },
         {
-          "name": "生成测试用例",
-          "text": "生成 UI 交互测试和边界测试用例"
+          "name": "执行路径选择",
+          "text": "依据仓库上下文选择最窄且可证明要求的执行路径，优先使用现有 acceptance、e2e、集成或手动 QA harness，而不是固定模板或默认浏览器流程"
         },
         {
-          "name": "执行测试",
-          "text": "使用 Playwright 执行测试并记录结果"
+          "name": "结果分级",
+          "text": "在 requirement matrix 中把结果明确标成 pass、fail、blocked 或 assumed，并避免把被阻塞或仅属假设的检查误写成缺陷"
         },
         {
-          "name": "生成报告",
-          "text": "输出包含统计数据、失败用例和改进建议的测试报告"
+          "name": "结构化证据",
+          "text": "输出包含 requirement matrix、execution path、evidence references 和 risk notes 的结构化验证报告，并保留每个需求项的 status 和 notes"
+        },
+        {
+          "name": "交接边界",
+          "text": "只有在存在可复现且有证据支撑的 fail 项时才 hand off 给 bug-analyzer；对不稳定或证据不足的情况保留为 blocked 或 assumed"
         }
       ]
     },
     {
       "id": 2,
       "name": "boundary-test-generation",
-      "prompt": "对登录表单执行边界测试，测试空值、超长字符串、特殊字符",
-      "expected_output": "边界测试报告，包含各类异常输入的测试结果",
+      "prompt": "根据 docs/pm/login-refresh/PRD.md、docs/pm/login-refresh/TRD.md、实现变更说明和仓库测试命令，对登录表单执行边界验证；覆盖空值、超长字符串、特殊字符、非法邮箱格式和锁定账号状态。如果上下文或环境缺失，必须先标记 blocked 或 assumed。",
+      "expected_output": "结构化边界验证报告，包含 requirement matrix、execution path、evidence references、risk notes 和 handoff decision",
       "assertions": [
         {
-          "name": "边界数据生成",
-          "text": "自动生成边界测试数据（空值、超长字符串、特殊字符、负数）"
+          "name": "范围与假设",
+          "text": "基于 PRD、TRD、实现变更说明和环境说明定义边界范围，先记录输入约束、未知依赖、环境假设和 blocked 条件，再开始执行"
         },
         {
-          "name": "失败分析",
-          "text": "对每个失败用例调用 bug-analyzer 生成详细报告"
+          "name": "边界执行",
+          "text": "围绕空值、超长字符串、特殊字符、非法格式和其他相关边界执行定向验证，而不是依赖固定的模板化命令"
+        },
+        {
+          "name": "证据与分层",
+          "text": "在报告中用 pass、fail、blocked 或 assumed 标记每个边界检查，并为每项保留可追踪的 evidence references"
+        },
+        {
+          "name": "硬性结构",
+          "text": "输出必须包含 requirement matrix、execution path、evidence references、risk notes 和 handoff decision 这些结构化段落"
+        },
+        {
+          "name": "风险与交接",
+          "text": "附带风险 notes 和未覆盖项；只有确认可复现失败时才交给 bug-analyzer，避免把 blocked 或假设项升级为缺陷"
         }
       ]
     }

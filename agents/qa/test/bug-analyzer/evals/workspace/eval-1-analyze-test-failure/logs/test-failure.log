@@ -1,0 +1,5 @@
+POST /api/login 500
+test: login form submits valid credentials
+browser: chromium
+trace: unavailable
+console: "Failed to load resource: server responded with 500"

@@ -1,0 +1,4 @@
+login validation > locked account message
+status: intermittent
+observed: timeout waiting for alert text
+environment: CI webkit shard 2

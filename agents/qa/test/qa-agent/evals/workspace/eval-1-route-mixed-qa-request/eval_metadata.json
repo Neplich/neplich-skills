@@ -1,0 +1,28 @@
+{
+  "eval_id": 1,
+  "eval_name": "route-mixed-qa-request",
+  "workspace_root": "agents/qa/test/qa-agent/evals/workspace/eval-1-route-mixed-qa-request",
+  "validation_method": "fresh_codex_subagent",
+  "skill_availability_goal": "Verify that qa-agent routes a mixed QA request to the narrowest downstream QA skill before execution.",
+  "prompt": "用户说：这个登录重构已经按 docs/pm/login-refresh/PRD.md 实现了，但 CI 里有一个 intermittent 失败，同时 PM 想知道是否可以进入验收。请先做 QA 路由，不要直接执行测试。",
+  "fixture_context": [
+    "docs/pm/login-refresh/PRD.md",
+    "docs/pm/login-refresh/TRD.md",
+    "implementation/changes.md",
+    "ci/login-intermittent-failure.log"
+  ],
+  "with_skill_outputs": [
+    "with_skill/outputs/subagent-verdict.md"
+  ],
+  "without_skill_outputs": [
+    "without_skill/outputs/subagent-verdict.md"
+  ],
+  "run_diagnostics": [
+    "diagnostics/run.json"
+  ],
+  "execution_cleanup": [
+    "with_skill/outputs",
+    "without_skill/outputs",
+    "diagnostics"
+  ]
+}

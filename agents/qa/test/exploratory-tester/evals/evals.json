@@ -4,36 +4,52 @@
     {
       "id": 1,
       "name": "explore-web-app",
-      "prompt": "对 http://localhost:3000 进行探索测试，发现潜在问题",
+      "prompt": "对当前可访问的目标应用进行探索测试，基于产品上下文、变更范围和环境说明发现潜在问题并验证探索协议",
       "expected_output": "探索测试报告，包含发现的问题列表和复现路径",
       "assertions": [
         {
-          "name": "环境检测",
-          "text": "输出包含应用健康检查结果"
+          "name": "探索章程",
+          "text": "先基于产品上下文、变更范围、已知风险和环境说明写出 exploration charter，明确 surface、timebox、heuristics 和 escalation signals"
         },
         {
-          "name": "执行探索",
-          "text": "使用 Playwright 模拟随机用户操作（点击、输入、滚动）"
+          "name": "范围与时限",
+          "text": "timebox 必须来自上下文而不是固定默认值，并优先围绕 changed surface 和 nearby risk areas 组织探索"
         },
         {
-          "name": "生成报告",
-          "text": "输出包含探索测试报告，记录发现的问题和探索路径"
+          "name": "证据分层",
+          "text": "在报告中分开记录 observed issues、suspicious but unconfirmed signals 和 gaps not explored，不把未确认信号写成缺陷"
+        },
+        {
+          "name": "探索方法",
+          "text": "以 chartered exploration 为主，随机化操作只能作为补充；输出要体现实际覆盖的路径、边界和证据，而不是随机点击日志"
+        },
+        {
+          "name": "可交接产物",
+          "text": "报告必须包含 charter、timebox、exploration path covered、evidence used 和 recommended next actions，方便后续 defect escalation"
         }
       ]
     },
     {
       "id": 2,
       "name": "explore-with-custom-duration",
-      "prompt": "对 http://localhost:5173 进行 5 分钟探索测试",
+      "prompt": "对用户指定的目标应用进行 5 分钟探索测试，按探索章程验证 changed surface、相邻风险和证据分层",
       "expected_output": "5 分钟探索测试报告",
       "assertions": [
         {
-          "name": "自定义配置",
-          "text": "使用用户指定的 URL 和时长"
+          "name": "上下文驱动范围",
+          "text": "根据用户指定的 URL 和时长建立探索章程，同时记录当前改动面、可用环境信息和未验证的前提"
         },
         {
-          "name": "异常记录",
-          "text": "记录 console errors、网络错误、页面崩溃等异常"
+          "name": "异常分层",
+          "text": "记录 console errors、网络错误、页面崩溃等异常时，区分 confirmed issue、unconfirmed signal 和 uncovered area"
+        },
+        {
+          "name": "证据输出",
+          "text": "输出应包含实际执行路径和 evidence references，而不是仅给出随机化操作清单"
+        },
+        {
+          "name": "风险交接",
+          "text": "对需要跟进的区域写清风险 notes 和下一步建议，便于后续 QA 或 bug-analyzer 接手"
         }
       ]
     }

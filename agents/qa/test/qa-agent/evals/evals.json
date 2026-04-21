@@ -1,0 +1,29 @@
+{
+  "skill_name": "qa-agent",
+  "evals": [
+    {
+      "id": 1,
+      "name": "route-mixed-qa-request",
+      "prompt": "用户说：这个登录重构已经按 docs/pm/login-refresh/PRD.md 实现了，但 CI 里有一个 intermittent 失败，同时 PM 想知道是否可以进入验收。请先做 QA 路由，不要直接执行测试。",
+      "expected_output": "QA 路由决策，明确选择最窄的下游 QA skill、选择理由、需要读取的上下文和预期 evidence artifact",
+      "assertions": [
+        {
+          "name": "路由选择",
+          "text": "必须在 spec-based-tester、exploratory-tester、bug-analyzer、regression-suite 中选择一个主 route，并说明为什么它比其他 QA skill 更窄、更适合当前 evidence outcome"
+        },
+        {
+          "name": "上下文传递",
+          "text": "必须列出下游 skill 需要先读取的 PM/spec、实现变更、CI 失败信息、环境说明和测试命令，而不是直接假设浏览器或端口"
+        },
+        {
+          "name": "结构化产物",
+          "text": "必须声明预期输出 artifact 的结构，例如 requirement matrix、execution path、evidence references、risk notes 或 defect handoff notes"
+        },
+        {
+          "name": "边界控制",
+          "text": "不能同时执行多个下游 skill；如果 CI intermittent failure 证据不足，应把它作为 risk note 或 potential bug-analyzer follow-up，而不是直接写 confirmed bug"
+        }
+      ]
+    }
+  ]
+}

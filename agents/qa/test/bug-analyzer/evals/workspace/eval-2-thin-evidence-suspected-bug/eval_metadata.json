@@ -1,0 +1,25 @@
+{
+  "eval_id": 2,
+  "eval_name": "thin-evidence-suspected-bug",
+  "workspace_root": "agents/qa/test/bug-analyzer/evals/workspace/eval-2-thin-evidence-suspected-bug",
+  "validation_method": "fresh_codex_subagent",
+  "skill_availability_goal": "Verify that bug-analyzer does not promote thin evidence into a confirmed defect.",
+  "prompt": "用户只提供一句反馈：偶尔点击保存后页面好像没反应，没有截图、日志、复现步骤、环境信息或版本号。请分析是否能生成 Bug 报告。",
+  "fixture_context": [
+    "feedback/customer-note.md"
+  ],
+  "with_skill_outputs": [
+    "with_skill/outputs/subagent-verdict.md"
+  ],
+  "without_skill_outputs": [
+    "without_skill/outputs/subagent-verdict.md"
+  ],
+  "run_diagnostics": [
+    "diagnostics/run.json"
+  ],
+  "execution_cleanup": [
+    "with_skill/outputs",
+    "without_skill/outputs",
+    "diagnostics"
+  ]
+}
