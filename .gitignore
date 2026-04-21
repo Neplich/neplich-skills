@@ -3,6 +3,15 @@
 .kiro/
 .windsurf/
 
+# macOS
+.DS_Store
+.AppleDouble
+.LSOverride
+Icon?
+._*
+.Spotlight-V100
+.Trashes
+
 # superpowers
 docs/superpowers/
 docs/pm/
@@ -10,3 +19,4 @@ docs/product_manager/
 
 # temp
 tmp
+harness-skill-agent.zip
