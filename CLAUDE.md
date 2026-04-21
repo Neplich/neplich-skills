@@ -105,10 +105,14 @@ Each skill should include:
 - `test/{skill-name}/evals/workspace/eval-{id}/` for evaluation workspaces
 - comparison results for using the skill vs. not using the skill
 
+Skill evals are availability tests for the agent skill. They must verify that the skill can be triggered, that its protocol is executable, and that it produces the expected structured artifact for the role. Eval assertions should check skill-specific behavior such as context reading, execution-path selection, evidence handling, blocked assumptions, and handoff boundaries instead of only checking generic model answer quality.
+
 **Eval runner constraints**
 
+- Final eval validation must be performed directly by a fresh Codex subagent in the current session. The subagent should read the skill document, relevant agent README, eval fixture workspace, and `evals.json`, then judge whether the skill behavior satisfies the eval assertions.
+- Do not treat background CLI transcript generation as the source of truth for eval pass/fail. CLI-generated transcripts may be kept as diagnostic artifacts only, while the final availability judgment must come from subagent validation.
 - Baseline outputs remain required. Do not weaken evals by making `without_skill` optional just to hide transcript-generation failures.
-- When generating Claude transcripts for evals, prefer structured output such as `claude -p --output-format json` and extract the final `result` field, rather than relying on plain text stdout.
+- When legacy transcript generation is needed for comparison artifacts, prefer structured output and extract the final result field, rather than relying on plain text stdout.
 - Generate transcripts in an isolated temporary workspace, not directly in the committed eval fixture. Historical outputs or generated PM docs can contaminate empty-workspace routing and other context-sensitive cases.
 - Use `execution_cleanup` in `eval_metadata.json` for paths that must be removed from the temporary workspace before each run, such as stale `PRD.md`, `docs/pm/`, or prior output folders.
 - Persist run diagnostics such as command, cwd, timeout, return code, and stdout length so infra failures can be separated from assertion failures.
